@@ -281,10 +281,6 @@
 						</a>
 					</c:if>
 
-					<a href="${_base}/invokmonitor/toinvokechart.html?interfaceName={{:interfaceName}}&method={{:methodName}}&activemenu=m_api"> 
-						<i class="fa fa-bell"></i> 监控信息
-					</a>
-
 					<a href="${_base}/api/downloadAPI?ownerType={{:ownerType}}&owner={{:owner}}&artifactId={{:artifactId}}&interfaceName={{:interfaceName}}&method={{:methodName}}&activemenu=m_api"> 
 						<i class="fa fa-cloud-download"></i> 下载数据
 					</a>
