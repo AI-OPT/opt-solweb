@@ -235,23 +235,52 @@
 	<script id="SearchResultImpl" type="text/x-jsrender">
 	<li>
 		<h3 class="title">
-			<a>
-					<span>{{:interfaceNameHighlight}}</span>#<span>{{:methodNameHighlight}}</span>
+			<a class="table-link" href="${_base}/api/apidetail.html?activemenu=m_api&owner={{:owner}}&ownerType={{:ownerType}}&interfaceName={{:interfaceName}}&methodName={{:methodName}}&version={{:version}}">
+				<span>{{:interfaceNameHighlight}}</span>#<span>{{:methodNameHighlight}}</span>
 			</a>
 		</h3>
 		<div class="clearfix">
 			<div class="desc">{{:briefCommentHighlight}}</div>
-			<div class="desc"><b>[最新版本信息]:</b> <font color="blue"><a class="table-link" href="${_base}/api/apidetail.html?activemenu=m_api&owner={{:owner}}&ownerType={{:ownerType}}&interfaceName={{:interfaceName}}&methodName={{:methodName}}&version={{:version}}">{{:version}}</a> </font> &nbsp;</div>
 			<div class="desc"><b>[API_CODE]:</b><font color="blue">{{:apiCodeHighlight}}</font></div>
 			<div class="desc"><b>[签名异常]:</b><font color="red">{{:exceptions}}</font></div>
 			<div class="desc"><b>[提供者]:</b><a href="${_base}/api/tosearch.html?owner={{:owner}}&ownerType={{:ownerType}}&activemenu=m_api"> <font color="blue">{{:ownerHighlight}}</font></a></div>
-			<div class="desc"><b>[仓库组]:</b><font color="blue">{{:groupIdHighlight}}</font> <b>[构件名]:</b><font color="blue">{{:artifactIdHighlight}}</font></div>
+			<div class="desc"><b>[仓库组]:</b><font color="blue">{{:groupIdHighlight}}</font> <b>[构件名]:</b><font color="blue">{{:artifactIdHighlight}}</font> <b>[最新版本]:</b> <font color="blue"><a class="table-link" href="${_base}/api/apidetail.html?activemenu=m_api&owner={{:owner}}&ownerType={{:ownerType}}&interfaceName={{:interfaceName}}&methodName={{:methodName}}&version={{:version}}">{{:version}}</a> </font> </div>
+			<div class="desc">
+
+<div class="main-box clearfix">
+	<div class="tabs-wrapper tabs-no-header">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#tab-gradle-{{:id}}" data-toggle="tab">Gradle</a></li>
+			<li><a href="#tab-maven-{{:id}}" data-toggle="tab">Maven</a></li>
+		</ul>
+		<div class="tab-content tab-content-body link-title clearfix">
+			<div class="tab-pane fade in active" id="tab-gradle-{{:id}}">
+				<textarea rows="2" cols="100" readonly>{{:groupId}}:{{:artifactId}}:{{:version}}</textarea>
+			</div>
+			<div class="tab-pane fade" id="tab-maven-{{:id}}">
+				<textarea rows="5" cols="100" readonly>
+<dependency>
+  <groupId>{{:groupId}}</groupId>
+  <artifactId>{{:artifactId}}</artifactId>
+  <version>{{:version}}</version>
+</dependency>
+				</textarea>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+			</div>
 			<div class="desc"><b>[负责人]:</b><font color="blue">{{:authorHighlight}}</font></div>
 			<div class="desc"><b>[REST支持]:</b><font color="red">{{if restSupported==true}} 支持 {{else}} 不支持 {{/if}}</font></div>
 			{{if restSupported==true}}
 			<div class="desc"><b>[REST地址]:</b><font color="blue">http://ip:port/xx/{{:restRelativeURLHighlight}}</font></div>
 			{{/if}}
 			<div class="desc"><b>[详细说明]:</b>{{:detailCommentHighlight}}</div>
+			
 			<div class="link-title">
 				<footer class="story-footer"> 
 					{{if isSetted==false}}
