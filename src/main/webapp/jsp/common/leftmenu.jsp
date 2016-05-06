@@ -15,7 +15,7 @@
 <li id="m_home" >
 <a href="${_base}/api/index.html">
 <i class="fa fa-home"></i>
-<span>首页</span>
+<span>接入统计</span>
 </a>
 <li>
 </li>

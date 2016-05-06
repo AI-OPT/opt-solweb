@@ -5,7 +5,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>服务测试-运营家服务在线</title>
+<title>Dubbo服务在线测试-服务在线管理</title>
 <link rel="stylesheet" href="${_base }/resources/jsoneditor/jsoneditor.min.css">
 <script src="${_base }/resources/jsoneditor/jsoneditor.min.js"></script>
 <script src="${_base }/resources/jsoneditor/asset/ace/ace.js"></script>
@@ -41,7 +41,7 @@
 									<ol class="breadcrumb">
 										<li><span>首页</span></li>
 										<li><span><a href="../api/tosearch.html?owner=<c:out value="${apiCallSetting.owner}"/>&ownerType=<c:out value="${apiCallSetting.ownerType}"/>&keywords=<c:out value="${apiCallSetting.method}"/>&activemenu=m_api">服务搜索</a></span></li>
-										<li class="active"><span>服务测试</span></li>
+										<li class="active"><span>dubbo服务测试</span></li>
 									</ol>
 								</div>
 							</div>

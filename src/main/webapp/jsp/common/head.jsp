@@ -5,7 +5,7 @@
 <div class="clearfix">
 <a href="${_base}/api/index.html" id="logo" >
 <img src="${_base }/resources/bootstrap/centaurus/img/optlogo.png" alt="" class="normal-logo logo-white"/>
-<span style="color:white;font-size:18px;">运营家服务在线</span>
+<span style="color:white;font-size:18px;">服务在线管理</span>
 </a>
 <button class="navbar-toggle" data-target=".navbar-ex1-collapse" data-toggle="collapse" type="button">
 <span class="sr-only">Toggle navigation</span>

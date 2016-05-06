@@ -249,4 +249,19 @@ public class APIController {
         out.close();
     }
 
+    @RequestMapping("/toenvsetting.html")
+    public ModelAndView toenvsetting(HttpServletRequest request) {
+        String owner = request.getParameter("owner");
+        String ownerType = request.getParameter("ownerType");
+
+        if (StringUtil.isBlank(owner)) {
+            throw new SystemException("API提供者不能为空");
+        }
+        if (StringUtil.isBlank(ownerType)) {
+            throw new SystemException("API提供者类型不能为空");
+        }
+        ModelAndView view = new ModelAndView("api/envsetting");
+        return view;
+    }
+
 }

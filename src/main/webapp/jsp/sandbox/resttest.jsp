@@ -5,7 +5,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>REST服务测试-运营家服务在线</title>
+<title>REST服务在线测试-服务在线管理</title>
 <link rel="stylesheet" href="${_base }/resources/jsoneditor/jsoneditor.min.css">
 <script src="${_base }/resources/jsoneditor/jsoneditor.min.js"></script>
 <script src="${_base }/resources/jsoneditor/asset/ace/ace.js"></script>

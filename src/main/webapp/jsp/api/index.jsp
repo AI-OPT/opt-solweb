@@ -5,7 +5,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>运营家服务在线</title>
+<title>服务在线管理</title>
 
 </head>
 <body
@@ -27,7 +27,7 @@
 									<ol class="breadcrumb">
 										<li><span><a
 												href="../api/index.html?activemenu=m_api">首页</a></span></li>
-										<li class="active"><span>服务在线</span></li>
+										<li class="active"><span>接入服务统计</span></li>
 									</ol>
 								</div>
 							</div>
@@ -39,9 +39,9 @@
 						<div class="col-lg-12">
 							<div class="main-box clearfix">
 								<header class="main-box-header clearfix">
-									<h2>运营家服务在线</h2>
+									<h2>功能介绍</h2>
 									<div class="main-box-body clearfix">
-										&nbsp;&nbsp;&nbsp;&nbsp;<span id="DIV_API_STATISCIS"></span>您可以通过网站，在线查看服务产品设计文档，查阅服务定义的规范，通过对接本地服务注册中心实现在线DEBUG，QA人员可以通过在线测试完成服务测试。系统提供服务开发过程管控，有效提升服务开发的效率。
+										&nbsp;&nbsp;&nbsp;&nbsp;<span id="DIV_API_STATISCIS"></span>提供服务静态管理、服务规范、服务在线测试、服务离线测试等核心功能
 									</div>
 								</header>
 							</div>
@@ -64,16 +64,32 @@
 									<c:forEach var="apiOwnerType" items="${apiOwnerTypes}" varStatus="varStatus">
 									<div class="tab-pane fade <c:if test="${varStatus.index==0}">in active</c:if>" id="tab-<c:out value="${apiOwnerType.ownerType}"/>">
 										<c:if test=" ${fn:length(apiOwnerType.ownerStatistics)<=0}">
-											此产品体系下没有任何产品
+											此产品分类下没有任何产品
 										</c:if>
 										<c:if test="${fn:length(apiOwnerType.ownerStatistics)>0}">
 										<c:forEach var="ownerStat" items="${apiOwnerType.ownerStatistics}" varStatus="varOwnerStatStatus">
-										<div class="col-lg-4 col-sm-6 col-xs-12" style="color: white;">
-											<div class="main-box infographic-box <c:out value="${ownerStat.color}"/>">
-												<i class="fa fa-user"></i> <span class="headline"><a style="color: white;" href="${_base}/api/downloadAPIs?activemenu=m_api&owner=<c:out value="${ownerStat.owner}"/>&ownerType=<c:out value="${ownerStat.ownerType}"/>" target="_blank" title="点击下载服务数据"><c:out value="${ownerStat.ownerName}"/></a></span>
-												<span class="value" > 
-												  <a style="color: white;" href="${_base}/api/tosearch.html?activemenu=m_api&owner=<c:out value="${ownerStat.owner}"/>&ownerType=<c:out value="${ownerStat.ownerType}"/>"><c:out value="${ownerStat.apiCount}"/>个服务 </a>
-												</span>
+
+										
+										<div class="col-md-3 col-sm-6 col-xs-12 pricing-package">
+											<div class="pricing-package-inner">
+												<div class="package-header <c:out value="${ownerStat.color}"/>">
+													<span class="stars center-block"></span>
+													<h3><c:out value="${ownerStat.ownerName}"/></h3>
+												</div>
+												<div class="package-content">
+													<div class="package-price">
+														<c:out value="${ownerStat.apiCount}"/><span class="package-month">个服务</span>
+													</div>
+													<ul class="package-top-features">
+														<li><span class="fa fa-cloud-download"></span> <a href="${_base}/api/downloadAPIs?activemenu=m_api&owner=<c:out value="${ownerStat.owner}"/>&ownerType=<c:out value="${ownerStat.ownerType}"/>" target="_blank" title="点击下载服务数据">数据下载</a></li>
+														<li><span class="fa fa-cogs"></span> <a href="${_base}/api/toenvsetting.html?activemenu=m_api&owner=<c:out value="${ownerStat.owner}"/>&ownerType=<c:out value="${ownerStat.ownerType}"/>" title="可以设置这个模块的调用环境，方便测试适合选择">环境设置</a></li>
+													</ul>
+												</div>
+											</div>
+											<div class="package-footer">
+												<a class="btn btn-success" href="${_base}/api/tosearch.html?activemenu=m_api&owner=<c:out value="${ownerStat.owner}"/>&ownerType=<c:out value="${ownerStat.ownerType}"/>"> 
+													<span class="fa  fa-search"></span> 进入
+												</a>
 											</div>
 										</div>
 										</c:forEach>
@@ -160,7 +176,7 @@
 
 	</script>
 	<script id="APIStatiscisImpl" type="text/x-jsrender">
-	在线网站目前一共接入了<font color="red"><b>{{:ownerTypeCount}}</b>类</font>产品体系,包含<font color="red"><b>{{:ownerCount}}</b>个</font>产品，共收录了<font color="red"><b>{{:apiCount}}</b>个</font>服务。
+	在线网站目前一共接入了<font color="red"><b>{{:ownerTypeCount}}</b>种</font>产品分类,包含<font color="red"><b>{{:ownerCount}}</b>个</font>产品，共收录了<font color="red"><b>{{:apiCount}}</b>个</font>服务。
 	</script>
 	
 
