@@ -39,7 +39,6 @@
 						<div class="col-lg-12">
 							<div class="main-box clearfix">
 								<header class="main-box-header clearfix">
-									<h2>功能介绍</h2>
 									<div class="main-box-body clearfix">
 										&nbsp;&nbsp;&nbsp;&nbsp;<span id="DIV_API_STATISCIS"></span>提供服务静态管理、服务规范、服务在线测试、服务离线测试等核心功能
 									</div>
