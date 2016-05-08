@@ -13,15 +13,6 @@
 </button>
 
 <div class="nav-no-collapse pull-right" id="header-nav">
-<ul class="nav navbar-nav pull-right">
-<li class="mobile-search">
-
-<a class="btn">
-<i class="fa fa-search"></i>
-</a>
-</li>
-
-</ul>
 </div>
 </div>
 </div>
