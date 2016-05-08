@@ -57,13 +57,24 @@
 								<div class="main-box-body clearfix">
 									<div class="form-horizontal" role="form">
 										<div class="form-group">
+											<label class="col-lg-2 control-label">选择预设环境</label>
+											<div class="col-lg-8">
+												<select id="SELECT_ENV" class="form-control">
+												</select>
+												<div class="ui-form-explain"><span class="fa fa-question-circle"></span>如果没有预设环境，请<a href="${_base}/api/toenvsetting.html?activemenu=m_api&ownerType=<c:out value="${apiCallSetting.ownerType}"/>&owner=<c:out value="${apiCallSetting.owner}"/>">设置</a></div>
+											</div>
+										</div>
+										<div class="form-group">
 											<label class="col-lg-2 control-label">注册中心地址</label>
 											<div class="col-lg-8">
-												<input type="text" class="form-control" id="registryURL" size="10" value="zookeeper://10.1.228.222:19181" placeholder="请确保测试站点可以连接到您的服务注册中心">
-												<select>
-													<option>选择环境</option>
-												</select>
-												<a href="javascript:void(0)" name="HrefConnectTest">连通性测试</a>
+												<div class="input-group">
+													<input type="text" class="form-control" id="registryURL" name="registryURL" size="10" class="ui-input"
+														   value="zookeeper://10.1.228.222:19181">
+      												<span class="input-group-btn">
+        												<button class="btn btn-lg btn-primary" type="button" name="HrefConnectTest">连通性测试</button>
+      												</span>
+												</div>
+												<div class="ui-form-explain">请确保测试站点可以连接到您的服务注册中心</div>
 											</div>
 										</div>
 										<div class="form-group">
@@ -277,6 +288,7 @@
 				this.settings = $.extend(true, {}, $.PageController.defaults);
 				this.bindEvents();
 				this.initJSONEditors();
+				this.initEnvSelect();
 			}
 
 			$.extend($.PageController, {
@@ -303,7 +315,37 @@
 							_this.testConnect();
 						});
 						
+						$("#SELECT_ENV").bind("change",function(){
+							var zkcenter = $(this).val();
+							$("#registryURL").val(zkcenter);
+						});
 						
+						
+					},
+					
+					initEnvSelect: function(){
+						var _this =this;
+						ajaxController.ajax({
+							method : "POST",
+							url : _base + "/api/getEnvSettings?rnd="+ Math.random(),
+							dataType : "json",
+							data: {
+								ownerType:  "<c:out value="${apiCallSetting.ownerType}"/>",
+								owner:  "<c:out value="${apiCallSetting.owner}"/>"
+							},
+							showWait : false,
+							message : "处理中，请稍候...",
+							success : function(data) {
+								var d = data.data;
+								var select = $("#SELECT_ENV");
+								select.append("<option value=''>请选择环境</option>")
+								$(d).each(function(inx,o){
+									if(o.zkcenter!=""){
+										select.append("<option value='"+o.zkcenter+"'>"+o.env+"</option>");
+									}
+								});
+							}
+						});
 					},
 					
 					toSelectAPICase: function(){ 

@@ -57,9 +57,17 @@
 								<div class="main-box-body clearfix">
 									<div class="form-horizontal" role="form">
 										<div class="form-group">
+											<label class="col-lg-2 control-label">选择预设环境</label>
+											<div class="col-lg-8">
+												<select id="SELECT_ENV" class="form-control">
+												</select>
+												<div class="ui-form-explain"><span class="fa fa-question-circle"></span>如果没有预设环境，请<a href="${_base}/api/toenvsetting.html?activemenu=m_api&ownerType=<c:out value="${apiRest.ownerType}"/>&owner=<c:out value="${apiRest.owner}"/>">设置</a></div>
+											</div>
+										</div>
+										<div class="form-group">
 											<label class="col-lg-2 control-label">HTTP地址</label>
 											<div class="col-lg-8">
-												<input type="text" class="form-control" id="restURL" value="http://10.1.228.222:10771/customer/<c:out value="${apiRest.restRelativeURL}"/>">
+												<input type="text" class="form-control" id="restURL" value="http://ip:port/module/<c:out value="${apiRest.restRelativeURL}"/>">
 												请确保HTTP Restful地址可以正常访问
 											</div>
 										</div>
@@ -67,6 +75,18 @@
 											<label class="col-lg-2 control-label">REST请求方式</label>
 											<div class="col-lg-8">
 												<input type="text" class="form-control" id="restMethod" size="10" value="<c:out value="${apiRest.restMethod}"/>" readonly>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-lg-2 control-label">提供者类型</label>
+											<div class="col-lg-8">
+												<input type="text"   class="form-control" id="ownerType" value="<c:out value="${apiRest.ownerType}"/>" readonly>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-lg-2 control-label">提供者</label>
+											<div class="col-lg-8">
+												<input type="text"   class="form-control" id="owner" value="<c:out value="${apiRest.owner}"/>" readonly>
 											</div>
 										</div>
 										<div class="form-group">
@@ -175,6 +195,7 @@
 				this.settings = $.extend(true, {}, $.PageController.defaults);
 				this.bindEvents();
 				this.initJSONEditors();
+				this.initEnvSelect();
 			}
 
 			$.extend($.PageController, {
@@ -188,10 +209,37 @@
 						$("#BTN_TEST").bind("click", function() {
 							_this.restTest();
 						});
-						
+						$("#SELECT_ENV").bind("change",function(){
+							var httprest = $(this).val();
+							$("#restURL").val(httprest+"/<c:out value="${apiRest.restRelativeURL}"/>");
+						});
 						
 					},   
 					 
+					initEnvSelect: function(){
+						var _this =this;
+						ajaxController.ajax({
+							method : "POST",
+							url : _base + "/api/getEnvSettings?rnd="+ Math.random(),
+							dataType : "json",
+							data: {
+								ownerType:  "<c:out value="${apiRest.ownerType}"/>",
+								owner:  "<c:out value="${apiRest.owner}"/>"
+							},
+							showWait : false,
+							message : "处理中，请稍候...",
+							success : function(data) {
+								var d = data.data;
+								var select = $("#SELECT_ENV");
+								select.append("<option value='http://ip:port/module'>请选择环境</option>")
+								$(d).each(function(inx,o){
+									if(o.resthttp!=""){
+										select.append("<option value='"+o.resthttp+"'>"+o.env+"</option>");
+									}
+								});
+							}
+						});
+					},
 					
 					initJSONEditors: function(){
 						var options = {

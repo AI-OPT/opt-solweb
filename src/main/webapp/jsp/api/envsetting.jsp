@@ -100,7 +100,7 @@
 											<label class="col-lg-2 control-label">REST服务地址</label>
 											<div class="col-lg-8"> 
 												<input type="text" class="form-control" id="resthttp">
-												<small class="red">请填写部署后的地址信息 http://ip:port/modulename/</small>
+												<small class="red">请填写部署后的地址信息 http://ip:port/modulename 最后不带/</small>
 											</div>
 										</div>
 										<div class="form-group">
