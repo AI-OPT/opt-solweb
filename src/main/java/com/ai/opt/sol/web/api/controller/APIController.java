@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.opt.sol.api.apisearch.IAPISearchSV;
+import com.ai.opt.sol.api.apisearch.param.APIEnvSettings;
 import com.ai.opt.sol.api.apisearch.param.APIOwnerType;
 import com.ai.opt.sol.api.apisearch.param.APISearchKey;
 import com.ai.opt.sol.api.apisearch.param.APISearchResult;
@@ -260,8 +261,72 @@ public class APIController {
         if (StringUtil.isBlank(ownerType)) {
             throw new SystemException("API提供者类型不能为空");
         }
+        request.setAttribute("owner", owner);
+        request.setAttribute("ownerType", ownerType);
         ModelAndView view = new ModelAndView("api/envsetting");
         return view;
+    }
+
+    @RequestMapping("/saveEnvSetting")
+    public ResponseData<String> saveEnvSetting(String envSetting) {
+        ResponseData<String> responseData = null;
+        try {
+            if (StringUtil.isBlank(envSetting)) {
+                throw new SystemException("没有提交数据");
+            }
+            APIEnvSettings vo = JSON.parseObject(envSetting, APIEnvSettings.class);
+            if (vo == null) {
+                throw new SystemException("没有提交数据");
+            }
+            DubboConsumerFactory.getService(IAPISearchSV.class).saveAPIEnvSettings(vo);
+            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "保存成功", "");
+        } catch (Exception e) {
+            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "保存失败:"
+                    + e.getMessage());
+        }
+        return responseData;
+    }
+
+    @RequestMapping("/getEnvSetting")
+    public ResponseData<APIEnvSettings> getEnvSetting(String settingId) {
+        ResponseData<APIEnvSettings> responseData = null;
+        try {
+            if (StringUtil.isBlank(settingId)) {
+                throw new SystemException("设置标识为空");
+            }
+            APIEnvSettings vo = DubboConsumerFactory.getService(IAPISearchSV.class)
+                    .getAPIEnvSetting(settingId);
+            if (vo == null) {
+                throw new SystemException("设置信息不存在");
+            }
+            responseData = new ResponseData<APIEnvSettings>(ResponseData.AJAX_STATUS_SUCCESS,
+                    "查询成功", vo);
+        } catch (Exception e) {
+            responseData = new ResponseData<APIEnvSettings>(ResponseData.AJAX_STATUS_FAILURE,
+                    "查询失败:" + e.getMessage());
+        }
+        return responseData;
+    }
+
+    @RequestMapping("/getEnvSettings")
+    public ResponseData<List<APIEnvSettings>> getEnvSettings(String ownerType, String owner) {
+        ResponseData<List<APIEnvSettings>> responseData = null;
+        try {
+            if (StringUtil.isBlank(owner)) {
+                throw new SystemException("API提供者不能为空");
+            }
+            if (StringUtil.isBlank(ownerType)) {
+                throw new SystemException("API提供者类型不能为空");
+            }
+            List<APIEnvSettings> list = DubboConsumerFactory.getService(IAPISearchSV.class)
+                    .getAPIEnvSettings(ownerType, owner);
+            responseData = new ResponseData<List<APIEnvSettings>>(ResponseData.AJAX_STATUS_SUCCESS,
+                    "查询成功", list);
+        } catch (Exception e) {
+            responseData = new ResponseData<List<APIEnvSettings>>(ResponseData.AJAX_STATUS_FAILURE,
+                    "查询失败:" + e.getMessage());
+        }
+        return responseData;
     }
 
 }

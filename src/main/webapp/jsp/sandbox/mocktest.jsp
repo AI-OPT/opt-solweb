@@ -60,7 +60,16 @@
 											<label class="col-lg-2 control-label">注册中心地址</label>
 											<div class="col-lg-8">
 												<input type="text" class="form-control" id="registryURL" size="10" value="zookeeper://10.1.228.222:19181" placeholder="请确保测试站点可以连接到您的服务注册中心">
+												<select>
+													<option>选择环境</option>
+												</select>
 												<a href="javascript:void(0)" name="HrefConnectTest">连通性测试</a>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-lg-2 control-label">提供者类型</label>
+											<div class="col-lg-8">
+												<input type="text"   class="form-control" id="ownerType" value="<c:out value="${apiCallSetting.ownerType}"/>" readonly>
 											</div>
 										</div>
 										<div class="form-group">
