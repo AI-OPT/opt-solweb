@@ -61,7 +61,7 @@
 											<div class="col-lg-8">
 												<select id="SELECT_ENV" class="form-control">
 												</select>
-												<div class="ui-form-explain"><span class="fa fa-question-circle"></span>如果没有预设环境，请<a href="${_base}/api/toenvsetting.html?activemenu=m_api&ownerType=<c:out value="${apiCallSetting.ownerType}"/>&owner=<c:out value="${apiCallSetting.owner}"/>">设置</a></div>
+												<div class="ui-form-explain"><span class="fa fa-question-circle"></span>如果没有预设环境，请<a href="${_base}/api/toenvsetting.html?activemenu=m_api&ownerType=<c:out value="${apiCallSetting.ownerType}"/>&owner=<c:out value="${apiCallSetting.owner}"/>">设置</a> <span id="SPAN_MONITOR"></span></div>
 											</div>
 										</div>
 										<div class="form-group">
@@ -316,8 +316,15 @@
 						});
 						
 						$("#SELECT_ENV").bind("change",function(){
-							var zkcenter = $(this).val();
-							$("#registryURL").val(zkcenter);
+							var env = $(this).val();
+							var data = _this.getEnvData(env);
+							$("#registryURL").val(data?data.zkcenter:"");
+							var monitor = data?data.monitor:false;
+							if(monitor){
+								$("#SPAN_MONITOR").html("<a href='"+monitor+"' target='_blank'>查看监控中心</a>");
+							}else{
+								$("#SPAN_MONITOR").html("");
+							}
 						});
 						
 						
@@ -337,15 +344,24 @@
 							message : "处理中，请稍候...",
 							success : function(data) {
 								var d = data.data;
+								_this.envlist = d?d:[];
 								var select = $("#SELECT_ENV");
 								select.append("<option value=''>请选择环境</option>")
 								$(d).each(function(inx,o){
 									if(o.zkcenter!=""){
-										select.append("<option value='"+o.zkcenter+"'>"+o.env+"</option>");
+										select.append("<option value='"+o.env+"'>"+o.env+"</option>");
 									}
 								});
 							}
 						});
+					},
+					
+					getEnvData: function(env){
+						var arr = this.envlist?this.envlist:[];
+						var dataarr = $.grep(arr,function(data,index){
+							return data.env==env;
+						});
+						if(dataarr.length>0)return dataarr[0];
 					},
 					
 					toSelectAPICase: function(){ 

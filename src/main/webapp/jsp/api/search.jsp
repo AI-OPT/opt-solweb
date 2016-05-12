@@ -291,9 +291,6 @@
 					<a href="${_base}/sandbox/apireqparamset.html?indexId={{:id}}&activemenu=m_api"> 
 						<i class="fa fa-pencil"></i>   修改模板
 					</a>
-					<a href="${_base}/sandbox/apisetting.html?indexId={{:id}}&activemenu=m_api"> 
-						<i class="fa fa-codepen"></i>  设置调用返回
-					</a>
 					<a href="${_base}/sandbox/toMockTest.html?indexId={{:id}}&activemenu=m_api"> 
 						<i class="fa fa-jsfiddle"></i> dubbo测试
 					</a>

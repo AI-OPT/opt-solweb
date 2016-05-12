@@ -48,6 +48,7 @@
 													<th class="text-center">环境名称</th>
 													<th class="text-center">注册中心</th>
 													<th class="text-center">REST服务地址</th>
+													<th class="text-center">监控中心地址</th>
 													<th>&nbsp;</th>
 												</tr>
 											</thead>
@@ -101,6 +102,13 @@
 											<div class="col-lg-8"> 
 												<input type="text" class="form-control" id="resthttp">
 												<small class="red">请填写部署后的地址信息 http://ip:port/modulename 最后不带/</small>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-lg-2 control-label">监控中心地址</label>
+											<div class="col-lg-8"> 
+												<input type="text" class="form-control" id="monitor">
+												<small class="red">请填写监控中心地址，例如：http://10.1.245.9:20000/applications.html</small>
 											</div>
 										</div>
 										<div class="form-group">
@@ -213,6 +221,7 @@
 								$("#ownerType").val(d.ownertype);
 								$("#zkcenter").val(d.zkcenter);
 								$("#resthttp").val(d.resthttp);
+								$("#monitor").val(d.monitor);
 							}
 						});
 					},
@@ -225,6 +234,7 @@
 						var env = $("#env").val().trim(); 
 						var zkcenter = $("#zkcenter").val().trim(); 
 						var resthttp = $("#resthttp").val().trim(); 
+						var monitor = $("#monitor").val().trim();
 						if(owner==""){
 							messageController.alert("提供者不能为空");
 							return ;
@@ -247,7 +257,8 @@
 							ownertype: ownertype,
 							env: env,
 							zkcenter: zkcenter,
-							resthttp: resthttp
+							resthttp: resthttp,
+							monitor: monitor
 						};
 						ajaxController.ajax({
 							method : "POST",
@@ -273,6 +284,7 @@
 						$("#env").val("");
 						$("#zkcenter").val("");
 						$("#resthttp").val("");
+						$("#monitor").val("");
 					}
 
 				}
@@ -292,6 +304,7 @@
 	<td class="text-center">{{:env}}</td>
 	<td class="text-center">{{:zkcenter}}</td>
 	<td class="text-center">{{:resthttp}}</td>
+	<td class="text-center">{{:monitor}}</td>
 	<td class="text-center"><a href="javascript:void(0)" class="table-link" name="HrefEditEnv" settingsId = "{{:settingsId}}">
 			<span class="fa-stack"> <i
 				class="fa fa-square fa-stack-2x"></i> <i
