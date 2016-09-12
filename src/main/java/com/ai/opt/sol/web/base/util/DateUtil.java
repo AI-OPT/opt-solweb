@@ -12,7 +12,7 @@ import java.util.Locale;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.ai.runner.base.exception.SystemException;
+import com.ai.opt.base.exception.SystemException;
 
 public final class DateUtil {
 
