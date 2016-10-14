@@ -1,0 +1,5 @@
+Manifest-Version: 1.0-SNAPSHOT
+Built-By: gradle 2.2
+packageName: opt-jscommon-libs
+Built-date: 2016-10-12 14:28:32
+
