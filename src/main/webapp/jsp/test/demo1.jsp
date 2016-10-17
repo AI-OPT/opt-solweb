@@ -9,9 +9,20 @@
 	<%@ include file="/inc/inc.jsp" %>
 </head>
 
-<body>
+<body
+	class="theme-whbl  pace-done fixed-header fixed-leftmenu fixed-footer">
+	<div id="theme-wrapper">
 
-<div class="content-wrapper-iframe"><!--右侧灰色背景-->
+		<%@ include file="/jsp/common/head.jsp"%>
+
+
+		<div id="page-wrapper" class="container">
+			<div class="row">
+				<%@ include file="/jsp/common/leftmenu.jsp"%>
+
+	<div id="content-wrapper">
+
+<!-- <div class="content-wrapper-iframe">右侧灰色背景 -->
 	<div class="row"><!--外围框架-->
 		<div class="col-lg-12"><!--删格化-->
 			<div class="row"><!--内侧框架-->
@@ -181,7 +192,11 @@
 			</div>
 		</div>
 	</div>
+<%@ include file="/jsp/common/foot.jsp"%>
 </div>
+				</div>
+			</div>
+		</div>
 </body>
 <script id="imageTemple" type="text/template">
 	<div id="photo-{{:#index+1}}"><img src="{{:picAddr}}" width="400" height="230"/></div>

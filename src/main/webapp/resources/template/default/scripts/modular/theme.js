@@ -36,16 +36,4 @@ $(document).ready(function(){
 		theme="theme-whbl"
 	}
 	
-	if(mgmtPath !=null && mgmtPath!="null"){
-		setCookie("mgmtPath", mgmtPath, 60*60*24);	
-	}
-	if(mgmtPath== null|| mgmtPath=="null"){	
-		
-		mgmtPath=unescape(getcookie("mgmtPath"));		
-	}
-	$("body").attr("id",theme);
-	$("body").attr("class",theme);
-
-	$("<iframe id='myifr' style='display:none' src='"+mgmtPath+"/static/agentifram.jsp'></iframe>").prependTo("body"); 
-	$("<script type='text/javascript' src='"+mgmtPath+"/static/iframhight.js'></script>").prependTo("body");
 })
