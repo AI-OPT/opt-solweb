@@ -56,6 +56,7 @@ dependencies {
 	
 	compile "com.ai.opt.sol:apisearch:2.0.1-SNAPSHOT"
 	compile "com.ai.opt.sol:sandbox:2.0.1-SNAPSHOT"
+	compile "com.ai.opt.sol:apisol:1.0.0-SNAPSHOT"
 	
 	compile 'com.ai.opt.sdk:opt-sdk:2.2-SNAPSHOT'
     compile 'com.ai.opt.xss.filter:opt-xss-firewall:1.0-SNAPSHOT'

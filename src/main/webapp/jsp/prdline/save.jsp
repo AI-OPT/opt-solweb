@@ -57,7 +57,7 @@
 					             <ul>
 					             	<li class="col-md-12 ui-form-item">
 					             		<p class="word">产品线描述</p>
-					             		<p><textarea name="prdlineRemark" class="textarea-xlarge" maxlength="500" value="${prdlineRemark}"></textarea></p>
+					             		<p><textarea name="prdlineRemark" class="int-text textarea-xlarge" maxlength="500" value="${prdlineRemark}"></textarea></p>
 					            	</li>
 					             </ul>
                             </div> 

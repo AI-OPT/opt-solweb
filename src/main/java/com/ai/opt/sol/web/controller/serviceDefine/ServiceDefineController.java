@@ -12,7 +12,7 @@ import com.ai.opt.sol.web.base.model.ResponseData;
 
 @Controller
 @RequestMapping("/serviceDefine")
-public class ServiceController {
+public class ServiceDefineController {
 	
 	@RequestMapping("/add")
 	public ModelAndView addView(){

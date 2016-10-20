@@ -66,7 +66,7 @@
 					             <ul>
 					             	<li class="col-md-12 ui-form-item">
 					             		<p class="word">服务描述</p>
-					             		<p><textarea name="srvRemark" class="textarea-xlarge" maxlength="500" value="${srvRemark}"></textarea></p>
+					             		<p><textarea name="srvRemark" class="int-text textarea-xlarge" maxlength="500" value="${srvRemark}"></textarea></p>
 					            	</li>
 					             </ul>
                             </div> 
