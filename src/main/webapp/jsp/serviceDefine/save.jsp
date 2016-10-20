@@ -30,16 +30,18 @@
                             <!-- 查询条件 -->
                             <div class="form-label bd-bottom ui-form" data-widget="validator">
                             	<input id="srvApiId" name="srvApiId" type="hidden" value="${srvApiId}">
+                            	<input id="srvCenter" name="srvCenter" type="hidden" value="${srvCenter}">
+                            	<input id="srvCategoryId" name="srvCategoryId" type="hidden" value="${srvCategoryId}">
 								<ul>
 					                <li class="col-md-12 ui-form-item">
 					                    <p class="word"><span>*</span>所属中心</p>
-					                    <p><input name="srvCenter" type="text" class="int-text int-medium"
-					                              required data-msg-required="所属中心不能为空"  value="${srvCenter}"></p>
+					                    <p><input id="srvCenterName" name="srvCenterName" type="text" class="int-text int-medium"
+					                              required data-msg-required="所属中心不能为空"  value="${srvCenterName}" readonly></p>
 					                </li>
 					                <li class="col-md-12 ui-form-item">
 										<p class="word"><span>*</span>服务分类</p>
 										<p>
-											<input name="srvCategoryId" type="text" class="int-text int-medium" required data-msg-required="服务分类不能为空" value="${srvCategoryId}">
+											<input id="srvCategoryName" name="srvCategoryName" type="text" class="int-text int-medium" required data-msg-required="服务分类不能为空" value="${srvCategoryName}" readonly>
 										</p>
 									</li>
 					             </ul>

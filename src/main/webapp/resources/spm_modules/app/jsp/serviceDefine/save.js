@@ -28,12 +28,40 @@ define('app/jsp/serviceDefine/save', function (require, exports, module) {
     	//事件代理
     	events: {
     		"click #submitSaveBtn":"_savePrdline",
-    		"click #cancelBtn":"_cancelSave"
+    		"click #cancelBtn":"_cancelSave",
+    		"click #srvCenterName":"_selectSrvCenter",
+    		"click #srvCategoryName":"_selectCategory"
         },
     	//重写父类
     	setup: function () {
     		prdlineAddPager.superclass.setup.call(this);
     	},
+    	_selectSrvCenter:function(){
+    		this._showTree('srvCenterName','srvCenter');
+    	},
+    	_selectCategory:function(){
+    		this._showTree('srvCategoryName','srvCategoryId');
+    	},
+    	_showTree:function(nameId, valueId) {
+            $.get(_base+'/category/tree', function (data) {
+                var options={
+                		title : "服务目录",
+        				message : data,
+        				callback:function () {
+        					 var categoryName = $("#selectName").val();
+    	                     $("#"+nameId).val(categoryName);
+    	                     var srvCenter = $("#selectId").val();
+    	                     $("#"+valueId).val(srvCenter);
+                        },
+                        buttons:{
+                        	ok:{
+                        		label:'确定'
+                        	}
+                        }
+                };
+                bootbox.alert(options);
+            });
+        },
     	_cancelSave: function(){
     		window.history.go(-1);
 			$('#serviceForm')[0].reset();
