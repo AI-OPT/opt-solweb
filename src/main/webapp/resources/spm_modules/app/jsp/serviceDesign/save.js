@@ -40,11 +40,11 @@ define('app/jsp/serviceDesign/save', function (require, exports, module) {
     	_modifyInputData:function(inputId,inputName,parentInputName,isRequired){
     		inputModifyArray.push(inputId);
     		$("#inputName_"+inputId).html(
-    				"<input id='inputName_val_"+inputId+"' type='text' class='table-int-mini' value='"+inputName+"' maxLength='32'>");
+    				"<input id='inputName_val_"+inputId+"' type='text' class='int-text int-small' value='"+inputName+"' maxLength='32'>");
     		$("#parentInputName_"+inputId).html(
-    				"<input id='parentInputName_val_"+inputId+"' type='text' class='table-int-mini' value='"+parentInputName+"' maxLength='32'>");
+    				"<input id='parentInputName_val_"+inputId+"' type='text' class='int-text int-small' value='"+parentInputName+"' maxLength='32'>");
     		$("#isRequired_"+inputId).html(
-    				"<input id='isRequired_val_"+inputId+"' type='text' class='table-int-mini' value='"+isRequired+"' maxLength='1'>");
+    				"<input id='isRequired_val_"+inputId+"' type='text' class='int-text int-small' value='"+isRequired+"' maxLength='1'>");
     	},
     	/**
     	 * 入参删除
@@ -67,9 +67,9 @@ define('app/jsp/serviceDesign/save', function (require, exports, module) {
     	_addInputData:function(){
     		$("#inputParamsData").append(
     			"<tr id='addInput_"+inputAddCount+"'>"
-					+"<td id='add_inputName_"+inputAddCount+"'><input id='add_inputName_val_"+inputAddCount+"' type='text' class='table-int-mini' maxLength='32'></td>"
-					+"<td id='add_parentInputName_"+inputAddCount+"'><input id='add_parentInputName_val_"+inputAddCount+"' type='text' class='table-int-mini' maxLength='32'></td>"
-					+"<td id='add_isRequired_"+inputAddCount+"'><input id='add_isRequired_val_"+inputAddCount+"' type='text' class='table-int-mini' maxLength='1'></td>"
+					+"<td id='add_inputName_"+inputAddCount+"'><input id='add_inputName_val_"+inputAddCount+"' type='text' class='int-text int-small'   maxLength='32'></td>"
+					+"<td id='add_parentInputName_"+inputAddCount+"'><input id='add_parentInputName_val_"+inputAddCount+"' type='text' class='int-text int-small'   maxLength='32'></td>"
+					+"<td id='add_isRequired_"+inputAddCount+"'><input id='add_isRequired_val_"+inputAddCount+"' type='text' class='int-text int-small'   maxLength='1'></td>"
                     +"<td><a href='JavaScript:void(0)' onclick='pager._deleteAddInputData("+inputAddCount+")' class='blue-border'>删除</a></td>"
 				+"</tr>"
     		);
@@ -82,9 +82,9 @@ define('app/jsp/serviceDesign/save', function (require, exports, module) {
     	_modifyOutputData:function(outputId,outputName,parentOutputName){
     		outputModifyArray.push(outputId);
     		$("#outputName_"+outputId).html(
-    				"<input id='outputName_val_"+outputId+"' type='text' class='table-int-mini' value='"+outputName+"' maxLength='32'>");
+    				"<input id='outputName_val_"+outputId+"' type='text' class='int-text int-small'   value='"+outputName+"' maxLength='32'>");
     		$("#parentOutputName_"+outputId).html(
-    				"<input id='parentOutputName_val_"+outputId+"' type='text' class='table-int-mini' value='"+parentOutputName+"' maxLength='32'>");
+    				"<input id='parentOutputName_val_"+outputId+"' type='text' class='int-text int-small'   value='"+parentOutputName+"' maxLength='32'>");
     	},
     	/**
     	 * 出参删除
@@ -107,8 +107,8 @@ define('app/jsp/serviceDesign/save', function (require, exports, module) {
     	_addOutputData:function(){
     		$("#outputParamsData").append(
     			"<tr id='addOutput_"+outputAddCount+"'>"
-					+"<td id='add_outputName_"+outputAddCount+"'><input id='add_outputName_val_"+outputAddCount+"' type='text' class='table-int-mini' maxLength='32'></td>"
-					+"<td id='add_parentOutputName_"+outputAddCount+"'><input id='add_parentOutputName_val_"+outputAddCount+"' type='text' class='table-int-mini' maxLength='32'></td>"
+					+"<td id='add_outputName_"+outputAddCount+"'><input id='add_outputName_val_"+outputAddCount+"' type='text' class='int-text int-small'   maxLength='32'></td>"
+					+"<td id='add_parentOutputName_"+outputAddCount+"'><input id='add_parentOutputName_val_"+outputAddCount+"' type='text' class='int-text int-small'   maxLength='32'></td>"
                     +"<td><a href='JavaScript:void(0)' onclick='pager._deleteAddOutputData("+outputAddCount+")' class='blue-border'>删除</a></td>"
 				+"</tr>"
     		);
