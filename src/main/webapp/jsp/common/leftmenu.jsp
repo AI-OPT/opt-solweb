@@ -54,6 +54,12 @@
 <span>产品线新增</span>
 </a>
 </li>
+<li id="m_api">
+<a href="${_base}/prdline/list">
+<i class="fa fa-th-large"></i>
+<span>产品线查询</span>
+</a>
+</li>
 
 
 </ul>
