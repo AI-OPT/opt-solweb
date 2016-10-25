@@ -190,7 +190,7 @@
 		<td>{{:serviceVersion}}</td>
 		<td>{{:prdlineManager}}</td>
 		<td>
-			<a href="javaScript:void(0)" onclick="pager._modifyPrdlineInfo('{{:srvPrdlineId}}')" class="blue-border">修改</a>
+			<a href="javaScript:void(0)" onclick="pager._editPrdlineDialog('{{:srvApiId}}','{{:srvPrdlineId}}')" class="blue-border">修改</a>
 		</td>
 	</tr>
 </script>

@@ -60,6 +60,7 @@ define('app/jsp/serviceDefine/list', function (require, exports, module) {
 	           	visiblePages:5,
 	           	callback: function (data) {
 	            	if(data && data.result && data.result.length>0){
+	            		$("#serviceCount").html(data.count);
 	            		var template = $.templates("#searchServiceTemple");
 	            	    var htmlOutput = template.render(data);
 	            	    $("#searchServiceData").html(htmlOutput);
@@ -129,6 +130,11 @@ define('app/jsp/serviceDefine/list', function (require, exports, module) {
     	_editPrdlineInfo:function(srvApiId){
     		var innerHtml="<div class='eject-large-paging' id='large1'>"
     			+"			<div class='eject-large-list'>"
+    			+"					<div class='row'>"
+    			+"					<p class='right pr-30'>"
+    			+"						<input type='button' class='biu-btn  btn-primary btn-blue btn-auto  ml-5' value='添加产品线' onclick='pager._editPrdlineDialog(\""+srvApiId+"\")'>"
+    			+"					</p>"
+    			+"					</div>"
     			+"		           <div class='table table-border table-bordered table-bg table-hover mt-10'>"
     			+"		                  <table width='650px' border='0'>"
     			+"							<thead>"
@@ -155,12 +161,15 @@ define('app/jsp/serviceDefine/list', function (require, exports, module) {
     		var d = Dialog({
     			title:"产品标签",
     			width:"700px",
-    			height:"450px",
+    			height:"500px",
     			closeIconShow:true,
     			innerHtml:innerHtml
     		});
     		d.show();
+    		this._renderPrdlineData(srvApiId);
     		
+    	},
+    	_renderPrdlineData:function(srvApiId){
     		$("#prdline-edit-pagination").runnerPagination({
     			
 	 			url: _base+"/serviceDefine/getPrdlineList",
@@ -182,8 +191,203 @@ define('app/jsp/serviceDefine/list', function (require, exports, module) {
     		});
     	},
     	
-    	_modifyPrdlineInfo:function(srvPrdlineId){
+    	_editPrdlineDialog:function(srvApiId,srvPrdlineId){
+    		var _this = this;
+    		var innerHtml="<form id='addPrdlineForm' method='post'>"
+						+"	<div id='addPrdlineDiv' class='main-box-body clearfix'>"
+						+"    <div class='form-label bd-bottom ui-form' data-widget='validator'>"
+						+"   	<input id='srvApiId' name='srvApiId' type='hidden' value='"+srvApiId+"'>"
+						+"   	<input id='srvPrdlineId' name='srvPrdlineId' type='hidden' value='"+srvPrdlineId+"'>"
+						+"        <ul>"
+						+"        	<li class='col-md-12 ui-form-item'>"
+						+"         		<p class='word'><span>*</span>产品线编码</p>"
+						+"         		<p><input id='prdlineCode' name='prdlineCode' type='text' class='int-text int-medium'  maxlength='120' readonly required data-msg-required='服务版本不能为空' onclick='pager._selectPrdlineDialog('"+srvPrdlineId+"')'></p>"
+						+"        	</li>"
+						+"         </ul>"
+						+"		 <ul>"
+						+"         	<li class='col-md-12 ui-form-item'>"
+						+"         		<p class='word'>产品线名称</p>"
+						+"         		<p><input id='prdlineName' name='prdlineName' type='text' class='int-text int-medium' readonly></p>"
+						+"       	</li>"
+						+"         </ul>"
+						+"         <ul>"
+						+"         	<li class='col-md-12 ui-form-item'>"
+						+"        		<p class='word'><span>*</span>产品线版本</p>"
+						+"         		<p><select name='prdlineVersionId' id='prdlineVersionId' class='select select-small'>"
+						+"					<option value=''>--请选择--</option>"					
+						+"				</select></p>"
+						+"       	</li>"
+						+"        </ul>"
+						+"        <ul>"
+						+"         	<li class='col-md-12 ui-form-item'>"
+						+"        		<p class='word'><span>*</span>服务版本</p>"
+						+"         		<p><select name='srvVersionId' id='srvVersionId' class='select select-small'>"
+						+"					<option value=''>--请选择--</option>"					
+						+"				</select></p>"
+						+"       	</li>"
+						+"        </ul>"
+						+"        <ul>"
+						+"         	<li class='col-md-12 ui-form-item'>"
+						+"        		<p class='word'><span>*</span>负责人</p>"
+						+"         		<p><input id='prdlineManager' name='prdlineManager' type='text' class='int-text int-medium' required data-msg-required='负责人不能为空'></p>"
+						+"       	</li>"
+						+"        </ul>"
+						+"    </div> "
+						+"</div>"
+						+"</form>";
+    		var d = Dialog({
+    			title:"新增版本",
+    			width:"550px",
+    			height:"450px",
+    			closeIconShow:true,
+    			innerHtml:innerHtml,
+    			okValue: '确 定',
+				ok:function(){
+					var isOk = false;
+					if(srvPrdlineId == null){
+						isOk = _this._addPrdline(srvApiId);
+					}else{
+						isOk = _this._modifyPrdline(srvApiId);
+					}
+					if(!isOk){
+						return false;
+					}
+				},
+				cancelValue:'取消',
+				cancel:function(){
+					this.close();
+				}
+    		});
+    		d.show();
     		
+    		if(srvPrdlineId != null){
+    			ajaxController.ajax({
+    				type: "post",
+    				processing: true,
+    				message: "保存中，请等待...",
+    				url: _base+"/serviceDefine/getPrdline",
+    				data:{"srvPrdlineId":srvPrdlineId},
+    				success: function(data){
+    					if(data.data){
+    						$("#prdlineCode").val(data.data.prdlineCode);
+    						$("#prdlineName").val(data.data.prdlineName);
+    						$("#prdlineManager").val(data.data.prdlineManager);
+    						var prdlineVersionId = data.data.prdlineVersionId;
+    						_this._inintPrdlineVersionSelect(srvPrdlineId,prdlineVersionId);
+    						var serviceVersionId = data.data.srvVersionId;
+    						_this._inintServiceVersionSelect(srvApiId,serviceVersionId);
+    					}
+    				}
+    			});
+    		}else{
+    			_this._inintPrdlineVersionSelect(srvPrdlineId,"");
+    			_this._inintServiceVersionSelect(srvApiId,"");
+    		}
+    	},
+    	
+    	/**
+    	 * 初始化产品线版本下拉框
+    	 */
+    	_inintPrdlineVersionSelect(srvPrdlineId,prdlineVersionId){
+    		ajaxController.ajax({
+				type: "post",
+				processing: true,
+				message: "保存中，请等待...",
+				url: _base+"/serviceDefine/getSelectPrdlineVersionList",
+				data:{"srvPrdlineId":srvPrdlineId},
+				success: function(data){
+					if("1"===data.statusCode && data.data && data.data.length>0){
+						for(var i=0;i<data.data.length;i++){
+							if(data.data[i].prdlineVersionId == prdlineVersionId){
+								var varItem = new Option(data.data[i].prdlineVersion, data.data[i].prdlineVersionId,true,true); 
+								document.getElementById("prdlineVersionId").options.add(varItem);
+							}else{
+								var varItem = new Option(data.data[i].prdlineVersion, data.data[i].prdlineVersionId); 
+								document.getElementById("prdlineVersionId").options.add(varItem);
+							}
+						}
+					}
+				}
+			});
+    	},
+    	
+    	/**
+    	 * 初始化服务版本下拉框
+    	 */
+    	_inintServiceVersionSelect(srvApiId,serviceVersionId){
+    		ajaxController.ajax({
+				type: "post",
+				processing: true,
+				message: "保存中，请等待...",
+				url: _base+"/serviceDefine/getSelectServiceVersionList",
+				data:{"srvApiId":srvApiId},
+				success: function(data){
+					if("1"===data.statusCode && data.data && data.data.length>0){
+						for(var i=0;i<data.data.length;i++){
+							if(data.data[i].srvVersionId == serviceVersionId){
+								var varItem = new Option(data.data[i].srvVersion, data.data[i].srvVersionId,true,true); 
+								document.getElementById("srvVersionId").options.add(varItem);
+							}else{
+								var varItem = new Option(data.data[i].srvVersion, data.data[i].srvVersionId); 
+								document.getElementById("srvVersionId").options.add(varItem);
+							}
+						}
+					}
+				}
+			});
+    	},
+    	
+    	/**
+    	 * 查询产品线
+    	 */
+    	_selectPrdlineDialog:function(srvPrdlineId){
+    		if(srvPrdlineId != null){
+    			return;
+    		}
+    		
+    	},
+    	
+    	/**
+    	 * 新增产品线
+    	 */
+    	_addPrdline:function(srvApiId){
+    		var _this = this;
+    		var validateForm = $("#addPrdlineForm").validate();
+			if(!validateForm.form()){
+				return false;
+			}
+			ajaxController.ajax({
+				type: "post",
+				processing: true,
+				message: "保存中，请等待...",
+				url: _base+"/serviceDefine/addPrdline",
+				data:$('#addPrdlineForm').serializeArray(),
+				success: function(data){
+					if("1"===data.statusCode){
+						_this._renderPrdlineData(srvApiId);
+					}
+				}
+			});
+    	},
+    	
+    	_modifyPrdline:function(srvPrdlineId){
+    		var _this = this;
+    		var validateForm = $("#addPrdlineForm").validate();
+			if(!validateForm.form()){
+				return false;
+			}
+			ajaxController.ajax({
+				type: "post",
+				processing: true,
+				message: "保存中，请等待...",
+				url: _base+"/serviceDefine/modifyPrdline",
+				data:$('#addPrdlineForm').serializeArray(),
+				success: function(data){
+					if("1"===data.statusCode){
+						_this._renderPrdlineData(srvApiId);
+					}
+				}
+			});
     	},
     	
     	/**
@@ -242,7 +446,7 @@ define('app/jsp/serviceDefine/list', function (require, exports, module) {
     		});
     	},
     	/**
-    	 * 显示修改版本信息
+    	 * 显示编辑版本信息
     	 */
     	_editVersionInfo:function(srvApiId){
     		var innerHtml="<div class='eject-large-paging' id='large1'>"

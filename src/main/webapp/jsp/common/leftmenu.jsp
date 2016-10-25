@@ -27,6 +27,34 @@
 </a>
 </li>
 
+<li id="m_api">
+<a href="${_base}/serviceDefine/list">
+<i class="fa fa-th-large"></i>
+<span>服务查询</span>
+</a>
+</li>
+
+<li id="m_api">
+<a href="${_base}/serviceDefine/add">
+<i class="fa fa-th-large"></i>
+<span>服务定义</span>
+</a>
+</li>
+
+<li id="m_api">
+<a href="${_base}/serviceDesign/add">
+<i class="fa fa-th-large"></i>
+<span>服务逻辑设计</span>
+</a>
+</li>
+
+<li id="m_api">
+<a href="${_base}/prdline/add">
+<i class="fa fa-th-large"></i>
+<span>产品线新增</span>
+</a>
+</li>
+
 
 </ul>
 </div>
