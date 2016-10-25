@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-	<title>服务管理</title>
+	<title>产品线管理</title>
 	<%@ include file="/inc/inc.jsp" %>
 	<script src="${_base}/resources/ztree/js/jquery.ztree.all-3.5.min.js"></script>
 	<link rel="stylesheet" href="${_base}/resources/ztree/css/zTreeStyle/zTreeStyle.css"/>
@@ -44,7 +44,8 @@
 						<div class="main-box-body clearfix">
                             <!-- 查询条件 -->
 						<div class="form-label">
-						<input type="hidden" id="categoryId" value=""/>
+							<input type="hidden" id="categoryId" value=""/>
+							<input type="hidden" id="prdlineId" value="${prdlineId}"/>
 							<ul>
 								<li class="col-md-6">
 									<p class="word">当前目录：</p>
@@ -81,16 +82,6 @@
 							<header class="main-box-header clearfix">
 								<h2 class="pull-left">服务列表</h2>
 							</header>
-                            <%-- <div class="row"><!--删格化-->
-                                <p class="right pr-30">
-                                    <input type="button" class="biu-btn  btn-primary btn-blue btn-auto  ml-5"
-                                           value="打标签" onclick="javaScript:window.location.href = '${_base}/normprodedit/add';">
-                                </p>
-                                <p class="right pr-30">
-                                    <input type="button" class="biu-btn  btn-primary btn-blue btn-auto  ml-5"
-                                           value="打版本" onclick="javaScript:window.location.href = '${_base}/normprodedit/add';">
-                                </p>
-                        	</div> --%>
                         	
                         	<div class="main-box-body clearfix">
 							<!--table表格-->
@@ -104,7 +95,6 @@
 										<th>服务分类</th>
 										<th>产品标签</th>
 										<th>版本记录</th>
-										<th>操作</th>
 									</tr>
 									</thead>
 									<tbody id="searchServiceData">
@@ -143,10 +133,6 @@
 												0
 											{{/if}}
 										</td>
-										<td>
-											<a href="javaScript:void(0)" onclick="pager._editPrdlineInfo('{{:srvApiId}}')" class="blue-border">打标签</a>
-											<a href="javaScript:void(0)" onclick="pager._editVersionInfo('{{:srvApiId}}')" class="blue-border">打版本</a>
-										</td>
 									</tr>
 									{{/for}}
 								</script>
@@ -159,7 +145,12 @@
 							<!--分页结束-->
 						</div>
                         	
-                        	
+                        	<div  class="row pt-30">
+                            	<p class="center pr-30 mt-30">
+                                    <input id="cancelBtn" type="button" class="biu-btn  btn-primary  btn-small  ml-5"
+                                           value="返    回">
+                            	</p>
+                            </div>
                         	
 						</div>
 					</div>
@@ -176,39 +167,6 @@
 </div>
 </div>
 </div>
-<script id="showPrdlineTemple" type="text/template">
-	<tr>
-		<td>{{:prdlineName}}</td>
-		<td>{{:prdlineVersion}}</td>
-		<td>{{:serviceVersion}}</td>
-	</tr>
-</script>
-<script id="editPrdlineTemple" type="text/template">
-	<tr>
-		<td>{{:prdlineCode}}</td>
-		<td>{{:prdlineName}}</td>
-		<td>{{:prdlineVersion}}</td>
-		<td>{{:serviceVersion}}</td>
-		<td>{{:prdlineManager}}</td>
-		<td>
-			<a href="javaScript:void(0)" onclick="pager._editPrdlineDialog('{{:srvApiId}}','{{:srvPrdlineId}}')" class="blue-border">修改</a>
-		</td>
-	</tr>
-</script>
-<script id="showVersionTemple" type="text/template">
-	<tr>
-		<td>{{:srvVersion}}</td>
-		<td>{{:createTime}}</td>
-		<td>{{:versionRemark}}</td>
-	</tr>
-</script>
-<script id="editVersionTemple" type="text/template">
-	<tr>
-		<td>{{:srvVersion}}</td>
-		<td>{{:createTime}}</td>
-		<td>{{:versionRemark}}</td>
-	</tr>
-</script>
 </body>
 <style type="text/css">
 .my-service-menu {
@@ -230,7 +188,7 @@
 <script type="text/javascript">
     var pager;
     (function () {
-        seajs.use('app/jsp/serviceDefine/list', function (serviceListPager) {
+        seajs.use('app/jsp/prdline/serviceList', function (serviceListPager) {
             pager = new serviceListPager({element: document.body});
             pager.render();
         });

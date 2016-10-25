@@ -34,30 +34,36 @@
 					                <li class="col-md-12 ui-form-item">
 					                    <p class="word"><span>*</span>产品线编码</p>
 					                    <p><input name="prdlineCode" type="text" class="int-text int-medium" maxlength="30"
-					                              required data-msg-required="产品线编码不能为空"  value="${prdlineCode}"></p>
+					                              required data-msg-required="产品线编码不能为空"  value="${solPrdline.prdlineCode}"></p>
 					                </li>
 					                <li class="col-md-12 ui-form-item">
 										<p class="word"><span>*</span>产品线名称</p>
 										<p><input  name="prdlineName" type="text" class="int-text int-medium"  maxlength="60"
-												  required data-msg-required="产品线名称不能为空"  value="${prdlineName}"></p>
+												  required data-msg-required="产品线名称不能为空"  value="${solPrdline.prdlineName}"></p>
 									</li>
 					             </ul>
 					             <ul>
 					             	<li class="col-md-12 ui-form-item">
 					             		<p class="word">行业类型</p>
-					             		<p><input  name="industryCode" type="text" class="int-text int-medium"  maxlength="30"  value="${industryCode}"></p>
+					             		<p>
+					             			<select name="industryCode" id="industryCode" class="select select-small">
+												<option value="">--请选择--</option>
+												<c:forEach var="info" items="${solIndustryList}">
+													<option value="${info.industryCode}" <c:if test="${info.industryCode==solPrdline.industryCode}">selected</c:if>>${info.industryName}</option>
+												</c:forEach>
+											</select>
 					            	</li>
 					             </ul>
 					             <ul>
 					             	<li class="col-md-12 ui-form-item">
 					             		<p class="word">负责人</p>
-					             		<p><input  name="prdlineManager" type="text" class="int-text int-medium"  maxlength="30" value="${prdlineManager}"></p>
+					             		<p><input  name="prdlineManager" type="text" class="int-text int-medium"  maxlength="30" value="${solPrdline.prdlineManager}"></p>
 					            	</li>
 					             </ul>
 					             <ul>
 					             	<li class="col-md-12 ui-form-item">
 					             		<p class="word">产品线描述</p>
-					             		<p><textarea name="prdlineRemark" class="int-text textarea-xlarge" maxlength="500" value="${prdlineRemark}"></textarea></p>
+					             		<p><textarea name="prdlineRemark" class="int-text textarea-xlarge" maxlength="500" >${solPrdline.prdlineRemark}</textarea></p>
 					            	</li>
 					             </ul>
                             </div> 

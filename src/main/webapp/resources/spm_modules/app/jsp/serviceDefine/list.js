@@ -33,7 +33,7 @@ define('app/jsp/serviceDefine/list', function (require, exports, module) {
     	//事件代理
     	events: {
     		//查询在售商品
-            "click #searchServiceBtn":"_selectServiceList",
+            "click #searchServiceBtn":"_selectServiceList"
             },
     	//重写父类
     	setup: function () {
@@ -41,10 +41,10 @@ define('app/jsp/serviceDefine/list', function (require, exports, module) {
     		this._selectServiceList();
     	},
     	//查询列表
-    	_selectServiceList:function(srvCategoryId){
+    	_selectServiceList:function(){
     		var _this = this;
     		var searchParams = $("#searchParams").val();
-    		
+    		var srvCategoryId = $("#categoryId").val();
     		$("#pagination-ul").runnerPagination({
     			
 	 			url: _base+"/serviceDefine/getServiceList",
@@ -125,7 +125,7 @@ define('app/jsp/serviceDefine/list', function (require, exports, module) {
     	},
     	
     	/**
-    	 * 显示编辑产品线
+    	 * 显示编辑产品线列表
     	 */
     	_editPrdlineInfo:function(srvApiId){
     		var innerHtml="<div class='eject-large-paging' id='large1'>"
@@ -190,7 +190,9 @@ define('app/jsp/serviceDefine/list', function (require, exports, module) {
 	            }
     		});
     	},
-    	
+    	/**
+    	 * 编辑产品线对话框
+    	 */
     	_editPrdlineDialog:function(srvApiId,srvPrdlineId){
     		var _this = this;
     		var innerHtml="<form id='addPrdlineForm' method='post'>"
@@ -368,8 +370,11 @@ define('app/jsp/serviceDefine/list', function (require, exports, module) {
 					}
 				}
 			});
+			return true;
     	},
-    	
+    	/**
+    	 * 修改产品线
+    	 */
     	_modifyPrdline:function(srvPrdlineId){
     		var _this = this;
     		var validateForm = $("#addPrdlineForm").validate();
@@ -388,6 +393,7 @@ define('app/jsp/serviceDefine/list', function (require, exports, module) {
 					}
 				}
 			});
+			return true;
     	},
     	
     	/**
