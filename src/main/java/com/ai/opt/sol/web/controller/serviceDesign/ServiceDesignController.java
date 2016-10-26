@@ -21,6 +21,15 @@ import com.ai.opt.sol.web.base.model.ResponseData;
 @Controller
 @RequestMapping("/serviceDesign")
 public class ServiceDesignController {
+	
+	@RequestMapping("/design")
+	public ModelAndView design(String srvApiId){
+		if(StringUtil.isBlank(srvApiId)){
+			return addView();
+		}else{
+			return editView(srvApiId);
+		}
+	}
 
 	@RequestMapping("/add")
 	public ModelAndView addView() {

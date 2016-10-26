@@ -146,6 +146,7 @@
 										<td>
 											<a href="javaScript:void(0)" onclick="pager._editPrdlineInfo('{{:srvApiId}}')" class="blue-border">打标签</a>
 											<a href="javaScript:void(0)" onclick="pager._editVersionInfo('{{:srvApiId}}')" class="blue-border">打版本</a>
+											<a href="${_base}/serviceDesign/design?srvApiId={{:srvApiId}}" class="blue-border">逻辑设计</a>
 										</td>
 									</tr>
 									{{/for}}
