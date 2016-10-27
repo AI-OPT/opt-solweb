@@ -195,6 +195,12 @@ define('app/jsp/serviceDefine/list', function (require, exports, module) {
     	 */
     	_editPrdlineDialog:function(srvApiId,srvPrdlineId){
     		var _this = this;
+    		isAddPrdServiceFlag = false;
+    		var titleVal = "修改产品标签";
+    		if(srvPrdlineId == null){
+    			titleVal = "新增产品标签";
+    			isAddPrdServiceFlag = true;
+    		}
     		var innerHtml="<form id='addPrdlineForm' method='post'>"
 						+"	<div id='addPrdlineDiv' class='main-box-body clearfix'>"
 						+"    <div class='form-label bd-bottom ui-form' data-widget='validator'>"
@@ -203,7 +209,7 @@ define('app/jsp/serviceDefine/list', function (require, exports, module) {
 						+"        <ul>"
 						+"        	<li class='col-md-12 ui-form-item'>"
 						+"         		<p class='word'><span>*</span>产品线编码</p>"
-						+"         		<p><input id='prdlineCode' name='prdlineCode' type='text' class='int-text int-medium'  maxlength='120' readonly required data-msg-required='服务版本不能为空' onclick='pager._selectPrdlineDialog('"+srvPrdlineId+"')'></p>"
+						+"         		<p><input id='prdlineCode' name='prdlineCode' type='text' class='int-text int-medium'  maxlength='120' readonly required data-msg-required='服务版本不能为空' onclick='pager._selectPrdlineDialog(\""+srvPrdlineId+"\")'></p>"
 						+"        	</li>"
 						+"         </ul>"
 						+"		 <ul>"
@@ -230,15 +236,15 @@ define('app/jsp/serviceDefine/list', function (require, exports, module) {
 						+"        </ul>"
 						+"        <ul>"
 						+"         	<li class='col-md-12 ui-form-item'>"
-						+"        		<p class='word'><span>*</span>负责人</p>"
-						+"         		<p><input id='prdlineManager' name='prdlineManager' type='text' class='int-text int-medium' required data-msg-required='负责人不能为空'></p>"
+						+"        		<p class='word'>负责人</p>"
+						+"         		<p><input id='prdlineManager' name='prdlineManager' type='text' class='int-text int-medium' readonly></p>"
 						+"       	</li>"
 						+"        </ul>"
 						+"    </div> "
 						+"</div>"
 						+"</form>";
     		var d = Dialog({
-    			title:"新增版本",
+    			title:titleVal,
     			width:"550px",
     			height:"450px",
     			closeIconShow:true,
@@ -342,9 +348,32 @@ define('app/jsp/serviceDefine/list', function (require, exports, module) {
     	/**
     	 * 查询产品线
     	 */
-    	_selectPrdlineDialog:function(srvPrdlineId){
-    		if(srvPrdlineId != null){
-    			return;
+    	_selectPrdlineDialog:function(){
+    		if(isAddPrdServiceFlag){
+    			var innerHtml = $("#showSelectPrdlineDialog").html();
+    			var d = Dialog({
+        			title:"新增版本",
+        			width:"800px",
+        			height:"500px",
+        			closeIconShow:true,
+        			innerHtml:innerHtml,
+        			okValue: '确 定',
+    				ok:function(){
+    					var prdlineId = $("input[name=CHEK_PRDLINE]:checked").val();
+    					var prdlineName = $("input[name=CHEK_PRDLINE]:checked").attr("prdlineName");
+    					var prdlineCode = $("input[name=CHEK_PRDLINE]:checked").attr("prdlineCode");
+    					var prdlineManager = $("input[name=CHEK_PRDLINE]:checked").attr("prdlineManager");
+    					$("#srvPrdlineId").val(prdlineId);
+    					$("#prdlineName").val(prdlineName);
+    					$("#prdlineCode").val(prdlineCode);
+    					$("#prdlineManager").val(prdlineManager);
+    				},
+    				cancelValue:'取消',
+    				cancel:function(){
+    					this.close();
+    				}
+        		});
+        		d.show();
     		}
     		
     	},
@@ -582,17 +611,6 @@ define('app/jsp/serviceDefine/list', function (require, exports, module) {
 				success: function(data){
 					if("1"===data.statusCode){
 						_this._renderVersionData(srvApiId);
-//						var d = Dialog({
-//							title:"提示",
-//							content:"保存成功",
-//							icon:'success',
-//							cancelValue: '确 定',
-//							cancel:function(){
-//								this.close();
-//								
-//							}
-//						});
-//						d.show();
 					}
 				}
 			});

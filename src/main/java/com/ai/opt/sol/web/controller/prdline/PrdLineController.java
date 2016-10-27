@@ -117,7 +117,7 @@ public class PrdLineController {
 
 			PageInfoResponse<SolPrdline> result = new PageInfoResponse<SolPrdline>();
 			result.setCount(5);
-			result.setPageCount(5);
+			result.setPageCount(1);
 			ResponseHeader responseHeader = new ResponseHeader(true, ResponseData.AJAX_STATUS_SUCCESS, "");
 			result.setResponseHeader(responseHeader);
 			result.setPageNo(1);

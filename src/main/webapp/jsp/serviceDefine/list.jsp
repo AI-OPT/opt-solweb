@@ -176,6 +176,11 @@
 	<%@ include file="/jsp/common/foot.jsp"%>
 </div>
 </div>
+<div style="display:none">
+	<div id="showSelectPrdlineDialog">
+		<%@ include file="/jsp/serviceDefine/selectPrdline.jsp"%>
+	</div>
+</div>
 </div>
 <script id="showPrdlineTemple" type="text/template">
 	<tr>
@@ -230,6 +235,8 @@
 
 <script type="text/javascript">
     var pager;
+    //为新增产品线标签标示
+    var isAddPrdServiceFlag = true;
     (function () {
         seajs.use('app/jsp/serviceDefine/list', function (serviceListPager) {
             pager = new serviceListPager({element: document.body});

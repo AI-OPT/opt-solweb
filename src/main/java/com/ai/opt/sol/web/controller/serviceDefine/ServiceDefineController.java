@@ -73,7 +73,7 @@ public class ServiceDefineController {
 
 			PageInfoResponse<ServiceDefine> result = new PageInfoResponse<ServiceDefine>();
 			result.setCount(5);
-			result.setPageCount(5);
+			result.setPageCount(1);
 			ResponseHeader responseHeader = new ResponseHeader(true, ResponseData.AJAX_STATUS_SUCCESS, "");
 			result.setResponseHeader(responseHeader);
 			result.setPageNo(1);
@@ -115,7 +115,7 @@ public class ServiceDefineController {
 			// 假数据 后续删除
 			PageInfoResponse<APIPrdFlag> result = new PageInfoResponse<APIPrdFlag>();
 			result.setCount(5);
-			//result.setPageCount(1);
+			result.setPageCount(1);
 			ResponseHeader responseHeader = new ResponseHeader(true, ResponseData.AJAX_STATUS_SUCCESS, "");
 			result.setResponseHeader(responseHeader);
 			result.setPageNo(1);
