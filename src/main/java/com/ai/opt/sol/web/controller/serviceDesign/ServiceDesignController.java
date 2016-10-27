@@ -34,6 +34,7 @@ public class ServiceDesignController {
 	@RequestMapping("/add")
 	public ModelAndView addView() {
 		ModelAndView view = new ModelAndView("/serviceDesign/save");
+		view.addObject("isAdd", true);
 		return view;
 	}
 
@@ -41,7 +42,7 @@ public class ServiceDesignController {
 	public ModelAndView editView(String srvApiId) {
 		ModelAndView modelAndView = new ModelAndView("/serviceDesign/save");
 		Map<String, Object> modelMap = new HashMap<String, Object>();
-		modelMap.put("isEdit", true);
+		modelMap.put("isAdd", false);
 		// TODO 根据srvApiId查询服务设计对象（入参出参） ISolServiceParamSV.designServiceQuery
 
 		// 测试数据

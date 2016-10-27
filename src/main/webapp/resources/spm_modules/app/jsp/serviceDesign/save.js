@@ -34,6 +34,33 @@ define('app/jsp/serviceDesign/save', function (require, exports, module) {
     	setup: function () {
     		prdlineAddPager.superclass.setup.call(this);
     	},
+    	
+    	/**
+    	 * 选择服务对话框
+    	 */
+    	_selectService:function(){
+    		var innerHtml = $("#selectServiceDialog").html();
+			var d = Dialog({
+    			title:"选择服务",
+    			width:"800px",
+    			height:"500px",
+    			closeIconShow:true,
+    			innerHtml:innerHtml,
+    			okValue: '确 定',
+				ok:function(){
+					var srvApiId = $("input[name=CHEK_SERVICE]:checked").val();
+					var srvApiName = $("input[name=CHEK_SERVICE]:checked").attr("srvApiName");
+					$("#srvApiId").val(srvApiId);
+					$("#srvApiName").val(srvApiName);
+				},
+				cancelValue:'取消',
+				cancel:function(){
+					this.close();
+				}
+    		});
+    		d.show();
+    	},
+    
     	/**
     	 * 入参编辑按钮事件
     	 */

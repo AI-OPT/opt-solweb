@@ -33,12 +33,12 @@
 					                <li class="col-md-12 ui-form-item">
 					                    <p class="word"><span>*</span>选择服务</p>
 					                    <p><input id="srvApiId" name="srvApiId" type="text" class="int-text int-medium"
-					                              required data-msg-required="服务不能为空"  value="${srvApiId}" <c:if test="${isEdit}">readonly</c:if>/></p>
+					                              required data-msg-required="服务不能为空"  value="${srvApiId}" readonly <c:if test="${isAdd}">onclick="pager._selectService()"</c:if>/></p>
 					                </li>
 					                <li class="col-md-12 ui-form-item">
 										<p class="word">服务名称</p>
 										<p>
-											<input name="srvApiName" type="text" class="int-text int-medium" value="${srvApiName}" readonly>
+											<input id="srvApiName" name="srvApiName" type="text" class="int-text int-medium" value="${srvApiName}" readonly>
 										</p>
 									</li>
 					             </ul>
@@ -170,6 +170,11 @@
 </div>
 	<%@ include file="/jsp/common/foot.jsp"%>
 </div>
+</div>
+<div style="display:none">
+	<div id="selectServiceDialog">
+		<%@ include file="/jsp/serviceDesign/selectService.jsp"%>
+	</div>
 </div>
 </div>
 </body>
