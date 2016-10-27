@@ -15,8 +15,10 @@ import com.ai.opt.base.vo.PageInfoResponse;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sol.api.apisol.param.APIPrdFlag;
 import com.ai.opt.sol.api.apisol.param.APISolPrdlineVersion;
+import com.ai.opt.sol.api.apisol.param.APISolServiceDefine;
 import com.ai.opt.sol.api.apisol.param.APISolServiceVersion;
 import com.ai.opt.sol.web.base.model.ResponseData;
+import com.ai.paas.ipaas.util.StringUtil;
 
 @Controller
 @RequestMapping("/serviceDefine")
@@ -37,11 +39,14 @@ public class ServiceDefineController {
 	 */
 	@RequestMapping("/save")
 	@ResponseBody
-	public ResponseData<String> save(HttpServletRequest request, HttpSession session, boolean isAdd) {
-		//TODO
-		// 当 新增
-
-		// 当 修改
+	public ResponseData<String> save(HttpServletRequest request, HttpSession session,APISolServiceDefine solServiceDefine) {
+		if(StringUtil.isBlank(solServiceDefine.getSrvApiId())){
+			// TODO 当 新增 ISolServiceDefineSV.createSolService
+			
+		}else{
+			// TODO 当 修改 ISolServiceDefineSV.modifySolService
+			
+		}
 		return new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS, "成功");
 	}
 
@@ -64,7 +69,7 @@ public class ServiceDefineController {
 			String queryParams, String srvCategoryId) {
 		ResponseData<PageInfoResponse<ServiceDefine>> responseData = null;
 		try {
-			// TODO 查询服务
+			// TODO 查询服务 ISolServiceDefineSV.querySolService(未实现分页查询)
 
 			PageInfoResponse<ServiceDefine> result = new PageInfoResponse<ServiceDefine>();
 			result.setCount(5);
@@ -105,7 +110,7 @@ public class ServiceDefineController {
 	private ResponseData<PageInfoResponse<APIPrdFlag>> getPrdlineList(HttpServletRequest request, String srvApiId) {
 		ResponseData<PageInfoResponse<APIPrdFlag>> responseData = null;
 		try {
-			// TODO 通过服务id获得对应的产品线
+			// TODO 通过服务id获得对应的产品线 ISolServicePrdlineRelSV.querySolServicePrdlineRel(未实现分页)
 
 			// 假数据 后续删除
 			PageInfoResponse<APIPrdFlag> result = new PageInfoResponse<APIPrdFlag>();
@@ -146,7 +151,7 @@ public class ServiceDefineController {
 	private ResponseData<APIPrdFlag> getPrdline(HttpServletRequest request, String srvPrdlineId) {
 		ResponseData<APIPrdFlag> responseData = null;
 		try {
-			// TODO 通过产品线id获得对应的产品线
+			// TODO 通过产品线id获得对应的产品线 ISolPrdlineSV.querySolPrdlineId
 
 			// 假数据 后续删除
 			APIPrdFlag e = new APIPrdFlag();
@@ -177,7 +182,7 @@ public class ServiceDefineController {
 			String srvPrdlineId) {
 		ResponseData<List<APISolPrdlineVersion>> responseData = null;
 		try {
-			// TODO 通过产品线id获得对应的产品线版本
+			// TODO 通过产品线id获得对应的产品线版本 ISolPrdlineVersionSV.querySolPrdlineVersionId
 
 			// 假数据 后续删除
 			List<APISolPrdlineVersion> result = new ArrayList<APISolPrdlineVersion>();
@@ -208,7 +213,7 @@ public class ServiceDefineController {
 			String srvApiId) {
 		ResponseData<List<APISolServiceVersion>> responseData = null;
 		try {
-			// TODO 通过服务id获得对应的服务版本
+			// TODO 通过服务id获得对应的服务版本 ISolServiceVersionSV.querySolServiceVersionId
 
 			// 假数据 后续删除
 			List<APISolServiceVersion> result = new ArrayList<APISolServiceVersion>();
@@ -236,7 +241,7 @@ public class ServiceDefineController {
 	@RequestMapping("/addPrdline")
 	@ResponseBody
 	public ResponseData<String> addPrdline(HttpServletRequest request, HttpSession session) {
-		// TODO 新增产品线
+		// TODO 新增服务关联产品线 ISolServicePrdlineRelSV.createSolServicePrdlineRel
 
 		return new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS, "成功");
 	}
@@ -250,7 +255,7 @@ public class ServiceDefineController {
 	@RequestMapping("/modifyPrdline")
 	@ResponseBody
 	public ResponseData<String> modifyPrdline(HttpServletRequest request, HttpSession session) {
-		// TODO 修改产品线
+		// TODO 修改产品线 ISolServicePrdlineRelSV.modifySolServicePrdlineRel
 
 		return new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS, "成功");
 	}
@@ -267,7 +272,7 @@ public class ServiceDefineController {
 			String srvApiId) {
 		ResponseData<PageInfoResponse<APISolServiceVersion>> responseData = null;
 		try {
-			// TODO 通过服务id获得对应的服务版本
+			// TODO 通过服务id获得对应的服务版本ISolServiceVersionSV.querySolServiceVersionId
 
 			// 假数据 后续删除
 			PageInfoResponse<APISolServiceVersion> result = new PageInfoResponse<APISolServiceVersion>();
@@ -305,7 +310,7 @@ public class ServiceDefineController {
 	@RequestMapping("/addVersion")
 	@ResponseBody
 	public ResponseData<String> addVersion(HttpServletRequest request, HttpSession session) {
-		// TODO 新增版本
+		// TODO 新增版本 ISolServiceVersionSV.createSolServiceVersion
 
 		return new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS, "成功");
 	}

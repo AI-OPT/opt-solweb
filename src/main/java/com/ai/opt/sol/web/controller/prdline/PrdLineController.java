@@ -29,7 +29,8 @@ public class PrdLineController {
 	public ModelAndView addView(){
 		ModelAndView view = new ModelAndView("/prdline/save");
 		
-		//TODO 查询行业类型列表
+		//TODO 查询行业类型列表初始化呢行业类型下来表使用  调用 ISolIndustrySV.queryIndustry
+		
 		
 		//测试数据
 		List<APISolIndustry> solIndustryList = new ArrayList<APISolIndustry>();
@@ -53,7 +54,7 @@ public class PrdLineController {
 	public ModelAndView editView(String prdlineId){
 		ModelAndView view = new ModelAndView("/prdline/save");
 		
-		//TODO 通过PrdlineId 查询产品线信息
+		//TODO 通过PrdlineId 查询产品线信息 ISolPrdlineSV.querySolPrdlineId
 		
 		//测试数据
 		SolPrdline solPrdline = new SolPrdline();
@@ -66,7 +67,7 @@ public class PrdLineController {
 		solPrdline.setPrdlineName("测试1");
 		solPrdline.setPrdlineRemark("测试数据");
 		
-		//TODO 查询行业类型列表
+		//TODO 查询行业类型列表 ISolIndustrySV.queryIndustry
 		
 		//测试数据
 		List<APISolIndustry> solIndustryList = new ArrayList<APISolIndustry>();
@@ -90,9 +91,9 @@ public class PrdLineController {
 	@ResponseBody
 	public ResponseData<String> save(HttpServletRequest request,HttpSession session){
 		//TODO 保存服务
-		//当prdlineId为空时  新增
+		//当prdlineId为空时  新增 ISolPrdlineSV.createSolPrdline
 		
-		//当prdlineId非空时  修改
+		//当prdlineId非空时  修改 ISolPrdlineSV.modifySolPrdline
 		return new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS, "成功");
 	}
 	
@@ -112,7 +113,7 @@ public class PrdLineController {
 			String queryParams) {
 		ResponseData<PageInfoResponse<SolPrdline>> responseData = null;
 		try {
-			// TODO 查询服务
+			// TODO 查询服务  调用ISolPrdlineSV.querySolPrdlineNameCode (未实现分页查询)
 
 			PageInfoResponse<SolPrdline> result = new PageInfoResponse<SolPrdline>();
 			result.setCount(5);
@@ -148,7 +149,7 @@ public class PrdLineController {
 	@RequestMapping("/delete")
 	@ResponseBody
 	public ResponseData<String> delete(HttpSession session, String prdlineId){
-		//TODO 删除服务
+		//TODO 删除服务 ISolPrdlineSV.delSolPrdline
 		
 		return new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS, "成功");
 	}
@@ -165,7 +166,7 @@ public class PrdLineController {
 			String srvApiId) {
 		ResponseData<PageInfoResponse<APISolPrdlineVersionResult>> responseData = null;
 		try {
-			// TODO 通过服务id获得对应的服务版本
+			// TODO 通过服务id获得对应的服务版本 ISolServiceVersionSV.querySolServiceVersion
 
 			// 假数据 后续删除
 			PageInfoResponse<APISolPrdlineVersionResult> result = new PageInfoResponse<APISolPrdlineVersionResult>();
@@ -203,7 +204,7 @@ public class PrdLineController {
 	@RequestMapping("/addVersion")
 	@ResponseBody
 	public ResponseData<String> addVersion(HttpServletRequest request, HttpSession session, APISolPrdlineVersion solPrdlineVersion) {
-		// TODO 新增版本
+		// TODO 新增版本 ISolPrdlineVersionSV.createSolPrdlineVersion
 
 		return new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS, "成功");
 	}
@@ -230,7 +231,7 @@ public class PrdLineController {
 			String queryParams, String srvCategoryId, String prdlineId) {
 		ResponseData<PageInfoResponse<ServiceDefine>> responseData = null;
 		try {
-			// TODO 查询服务
+			// TODO 查询产品线下相关服务  ISolPrdlineVersionSV.querySolPrdlineVersion
 
 			PageInfoResponse<ServiceDefine> result = new PageInfoResponse<ServiceDefine>();
 			result.setCount(5);

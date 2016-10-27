@@ -42,7 +42,7 @@ public class ServiceDesignController {
 		ModelAndView modelAndView = new ModelAndView("/serviceDesign/save");
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		modelMap.put("isEdit", true);
-		// TODO 根据srvApiId查询服务设计对象（入参出参）
+		// TODO 根据srvApiId查询服务设计对象（入参出参） ISolServiceParamSV.designServiceQuery
 
 		// 测试数据
 		modelMap.put("srvApiId", "1001");
@@ -82,28 +82,28 @@ public class ServiceDesignController {
 		String outputAddArray = request.getParameter("outputAddArray");
 		// 修改入参数据
 		if (!StringUtil.isBlank(inputModifyArray)) {
-			// TODO 调用入参修改
+			// TODO 调用入参修改 ISolServiceParamSV.modifyInputServiceParam
 		}
 		// 新增入参数据
 		if (!StringUtil.isBlank(inputAddArray)) {
-			// TODO 调用入参新增
+			// TODO 调用入参新增 ISolServiceParamSV.createServiceInput
 		}
 		// 删除入参数据
 		if (!StringUtil.isBlank(inputDeleteArray)) {
-			// TODO 调用入参删除
+			// TODO 调用入参删除 ISolServiceParamSV.delInputServiceParam
 		}
 
 		// 修改出参数据
 		if (!StringUtil.isBlank(outputModifyArray)) {
-			// TODO 调用出参修改
+			// TODO 调用出参修改 ISolServiceParamSV.modifyOutputServiceParam
 		}
 		// 新增出参数据
 		if (!StringUtil.isBlank(outputAddArray)) {
-			// TODO 调用出参新增
+			// TODO 调用出参新增 ISolServiceParamSV.createServiceOutput
 		}
 		// 删除出参数据
 		if (!StringUtil.isBlank(outputDeleteArray)) {
-			// TODO 调用出参删除
+			// TODO 调用出参删除 ISolServiceParamSV.delOutputServiceParam
 		}
 
 		return new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS, "成功");
