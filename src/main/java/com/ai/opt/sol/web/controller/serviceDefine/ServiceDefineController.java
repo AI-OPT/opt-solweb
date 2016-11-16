@@ -13,12 +13,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.opt.base.vo.PageInfoResponse;
 import com.ai.opt.base.vo.ResponseHeader;
+import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sol.api.apisol.param.APIPrdFlag;
 import com.ai.opt.sol.api.apisol.param.APISolPrdlineVersion;
 import com.ai.opt.sol.api.apisol.param.APISolServiceDefine;
 import com.ai.opt.sol.api.apisol.param.APISolServiceVersion;
 import com.ai.opt.sol.web.base.model.ResponseData;
-import com.ai.paas.ipaas.util.StringUtil;
 
 @Controller
 @RequestMapping("/serviceDefine")
