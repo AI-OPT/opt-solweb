@@ -1,4 +1,4 @@
-package com.ai.opt.sol.web.api.controller;
+package com.ai.opt.sol.web.controller;
 
 import java.io.PrintWriter;
 import java.util.List;
@@ -20,7 +20,7 @@ import com.ai.opt.sol.web.base.exception.SystemException;
 import com.ai.opt.sol.web.base.model.ResponseData;
 import com.ai.opt.sol.web.base.util.DubboConsumerFactory;
 import com.ai.opt.sol.web.base.util.StringUtil;
-import com.ai.opt.sol.web.sandbox.controller.SandboxController;
+import com.ai.opt.sol.web.controller.SandboxController;
 import com.ai.runner.apicollector.util.JavaDocletUtil;
 import com.ai.runner.apicollector.vo.APIClassDoc;
 import com.ai.runner.apicollector.vo.APIClassFieldDoc;

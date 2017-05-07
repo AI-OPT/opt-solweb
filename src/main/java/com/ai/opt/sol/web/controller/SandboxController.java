@@ -1,4 +1,4 @@
-package com.ai.opt.sol.web.sandbox.controller;
+package com.ai.opt.sol.web.controller;
 
 import java.util.List;
 
