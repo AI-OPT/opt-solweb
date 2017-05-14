@@ -6,7 +6,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ai.opt.sdk.util.StringUtil;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,9 +20,6 @@ import com.ai.opt.sol.api.apisearch.param.APISearchKey;
 import com.ai.opt.sol.api.apisearch.param.APISearchResult;
 import com.ai.opt.sol.web.base.exception.SystemException;
 import com.ai.opt.sol.web.base.model.ResponseData;
-import com.ai.opt.sol.web.base.util.DubboConsumerFactory;
-import com.ai.opt.sol.web.base.util.StringUtil;
-import com.ai.opt.sol.web.controller.SandboxController;
 import com.ai.runner.apicollector.util.JavaDocletUtil;
 import com.ai.runner.apicollector.vo.APIClassDoc;
 import com.ai.runner.apicollector.vo.APIClassFieldDoc;
@@ -35,10 +34,12 @@ public class APIController {
 
     private static final Logger LOG = Logger.getLogger(SandboxController.class);
 
+    @Autowired
+    IAPISearchSV apiSearchSV;
+
     @RequestMapping("/index.html")
     public ModelAndView index(HttpServletRequest request) {
-        List<APIOwnerType> apiOwnerTypes = DubboConsumerFactory.getService(IAPISearchSV.class)
-                .getAPIOwnerTypes();
+        List<APIOwnerType> apiOwnerTypes = apiSearchSV.getAPIOwnerTypes();
         request.setAttribute("apiOwnerTypes", apiOwnerTypes);
         ModelAndView view = new ModelAndView("api/index");
         return view;
@@ -55,7 +56,7 @@ public class APIController {
     public ResponseData<JSONObject> getAPIStatistics() {
         ResponseData<JSONObject> responseData = null;
         try {
-            String data = DubboConsumerFactory.getService(IAPISearchSV.class).getAPIStatistics();
+            String data = apiSearchSV.getAPIStatistics();
             responseData = new ResponseData<JSONObject>(ResponseData.AJAX_STATUS_SUCCESS,
                     "API在线统计成功", JSONObject.parseObject(data));
         } catch (Exception e) {
@@ -94,11 +95,11 @@ public class APIController {
             if (vo == null) {
                 throw new SystemException("查询条件为空");
             }
-            PageInfo<APISearchResult> result = DubboConsumerFactory.getService(IAPISearchSV.class)
-                    .searchAPIDocs(vo);
+            PageInfo<APISearchResult> result = apiSearchSV.searchAPIDocs(vo);
             responseData = new ResponseData<PageInfo<APISearchResult>>(
                     ResponseData.AJAX_STATUS_SUCCESS, "查询成功", result);
         } catch (Exception e) {
+            LOG.error("",e);
             responseData = new ResponseData<PageInfo<APISearchResult>>(
                     ResponseData.AJAX_STATUS_FAILURE, "查询失败:" + e.getMessage());
         }
@@ -124,8 +125,7 @@ public class APIController {
             throw new SystemException("API版本不能为空");
         }
         int id = JavaDocletUtil.getAPIHashCode(interfaceName, methodName, version);
-        String data = DubboConsumerFactory.getService(IAPISearchSV.class).getAPIVersionHistory(
-                StringUtil.toString(id));
+        String data = apiSearchSV.getAPIVersionHistory(StringUtil.toString(id));
         if (StringUtil.isBlank(data)) {
             throw new SystemException("API的这个版本没有发布，请联系服务负责人先发布");
         }
@@ -141,7 +141,7 @@ public class APIController {
         if (StringUtil.isBlank(indexId)) {
             throw new SystemException("缺少API的索引信息");
         }
-        String data = DubboConsumerFactory.getService(IAPISearchSV.class).getAPIVersionNew(indexId);
+        String data = apiSearchSV.getAPIVersionNew(indexId);
         if (StringUtil.isBlank(data)) {
             throw new SystemException("API的这个版本没有发布，请联系服务负责人先发布");
         }
@@ -158,7 +158,7 @@ public class APIController {
             if (StringUtil.isBlank(pIndexId)) {
                 throw new SystemException("获取子属性错误，缺少上级属性索引ID");
             }
-            String data = DubboConsumerFactory.getService(IAPISearchSV.class).getAPIClassDetail(
+            String data = apiSearchSV.getAPIClassDetail(
                     pIndexId);
             if (StringUtil.isBlank(data)) {
                 throw new SystemException("获取子属性错误，缺少索引数据");
@@ -180,7 +180,7 @@ public class APIController {
             if (StringUtil.isBlank(indexId)) {
                 throw new SystemException("缺少索引标识");
             }
-            DubboConsumerFactory.getService(IAPISearchSV.class).deleteAPINew(indexId);
+            apiSearchSV.deleteAPINew(indexId);
             responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "服务作废成功",
                     null);
         } catch (Exception e) {
@@ -201,8 +201,7 @@ public class APIController {
         if (StringUtil.isBlank(owner)) {
             throw new SystemException("服务提供者不能为空");
         }
-        String data = DubboConsumerFactory.getService(IAPISearchSV.class).downloadAPIs(ownerType,
-                owner);
+        String data = apiSearchSV.downloadAPIs(ownerType,owner);
 
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/json");
@@ -237,8 +236,7 @@ public class APIController {
         if (StringUtil.isBlank(method)) {
             throw new SystemException("服务接口方法不能为空");
         }
-        String data = DubboConsumerFactory.getService(IAPISearchSV.class).downloadAPI(ownerType,
-                owner, artifactId, interfaceName, method);
+        String data = apiSearchSV.downloadAPI(ownerType,owner, artifactId, interfaceName, method);
 
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/json");
@@ -278,7 +276,7 @@ public class APIController {
             if (vo == null) {
                 throw new SystemException("没有提交数据");
             }
-            DubboConsumerFactory.getService(IAPISearchSV.class).saveAPIEnvSettings(vo);
+            apiSearchSV.saveAPIEnvSettings(vo);
             responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "保存成功", "");
         } catch (Exception e) {
             responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "保存失败:"
@@ -294,8 +292,7 @@ public class APIController {
             if (StringUtil.isBlank(settingId)) {
                 throw new SystemException("设置标识为空");
             }
-            APIEnvSettings vo = DubboConsumerFactory.getService(IAPISearchSV.class)
-                    .getAPIEnvSetting(settingId);
+            APIEnvSettings vo = apiSearchSV.getAPIEnvSetting(settingId);
             if (vo == null) {
                 throw new SystemException("设置信息不存在");
             }
@@ -318,8 +315,7 @@ public class APIController {
             if (StringUtil.isBlank(ownerType)) {
                 throw new SystemException("API提供者类型不能为空");
             }
-            List<APIEnvSettings> list = DubboConsumerFactory.getService(IAPISearchSV.class)
-                    .getAPIEnvSettings(ownerType, owner);
+            List<APIEnvSettings> list = apiSearchSV.getAPIEnvSettings(ownerType, owner);
             responseData = new ResponseData<List<APIEnvSettings>>(ResponseData.AJAX_STATUS_SUCCESS,
                     "查询成功", list);
         } catch (Exception e) {

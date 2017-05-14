@@ -35,21 +35,24 @@ dependencies {
     compile "javax.servlet:javax.servlet-api:3.1.0"
     compile "javax.servlet.jsp:javax.servlet.jsp-api:2.3.1"
     compile 'com.alibaba:fastjson:1.2.6'
-	compile ("com.alibaba:dubbox:2.8.3") {
-		exclude group: 'org.springframework', module: 'spring'
-	}
+//	compile ("com.alibaba:dubbox:2.8.3") {
+//		exclude group: 'org.springframework', module: 'spring'
+//	}
 	compile ("com.101tec:zkclient:0.4") {
 		exclude group: 'org.apache.zookeeper', module: 'zookeeper'
 		exclude group: 'log4j', module: 'log4j'
 	}
 	compile "org.apache.zookeeper:zookeeper:3.4.6"
+    compile 'org.elasticsearch:elasticsearch:1.6.2'
+    compile	'org.apache.commons:commons-email:1.4'
+    compile 'org.dom4j:dom4j:1.6.1'
+    compile 'org.quartz-scheduler:quartz:2.2.1'
 
     compile 'org.apache.httpcomponents:httpclient:4.5'
     compile 'org.apache.curator:curator-framework:2.8.0'
     compile 'org.apache.curator:curator-recipes:2.8.0'
-    compile "org.apache.zookeeper:zookeeper:3.4.6"
-    compile 'com.google.code.gson:gson:2.3.1'
 	compile "org.javassist:javassist:3.15.0-GA"
+    compile 'org.apache.commons:commons-compress:1.9'
 	
 	compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.3'
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.3'
@@ -63,7 +66,9 @@ dependencies {
     compile "com.ai.runner:runner-base:1.0"
     compile 'com.ai.runner.util:runner-util:1.0.5-SNAPSHOT'
 	compile 'com.ai.runner.plugin:apicollector:2.0-SNAPSHOT'
-	
+    compile ("com.ai.opt.sdk:opt-sdk:2.2-SNAPSHOT"){
+        exclude group: 'com.ai'
+    }
 	
     compile fileTree(dir:'src/main/webapp/WEB-INF/lib',include:'**/*.jar')
     

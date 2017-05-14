@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.ai.opt.sdk.util.StringUtil;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,8 +20,6 @@ import com.ai.opt.sol.api.sandbox.param.APIRest;
 import com.ai.opt.sol.api.sandbox.param.APIRestTestReq;
 import com.ai.opt.sol.web.base.exception.SystemException;
 import com.ai.opt.sol.web.base.model.ResponseData;
-import com.ai.opt.sol.web.base.util.DubboConsumerFactory;
-import com.ai.opt.sol.web.base.util.StringUtil;
 import com.ai.runner.base.vo.PageInfo;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -29,12 +29,13 @@ import com.alibaba.fastjson.JSONObject;
 public class SandboxController {
 
     private static final Logger LOG = Logger.getLogger(SandboxController.class);
+    @Autowired
+    ISandBoxSV sandBoxSV;
 
     @RequestMapping("/apisetting.html")
     public ModelAndView apisetting(HttpServletRequest request) {
         String indexId = request.getParameter("indexId");
-        ISandBoxSV iSandBoxSV = DubboConsumerFactory.getService(ISandBoxSV.class);
-        APICallSetting apiCallSetting = iSandBoxSV.getAPICallSettingFromES(indexId);
+        APICallSetting apiCallSetting = sandBoxSV.getAPICallSettingFromES(indexId);
         request.setAttribute("apiCallSetting", apiCallSetting);
         ModelAndView view = new ModelAndView("sandbox/apisetting");
         return view;
@@ -43,8 +44,7 @@ public class SandboxController {
     @RequestMapping("/apireqparamset.html")
     public ModelAndView apireqparamset(HttpServletRequest request) {
         String indexId = request.getParameter("indexId");
-        ISandBoxSV iSandBoxSV = DubboConsumerFactory.getService(ISandBoxSV.class);
-        APICallSetting apiCallSetting = iSandBoxSV.getAPICallSettingFromES(indexId);
+        APICallSetting apiCallSetting = sandBoxSV.getAPICallSettingFromES(indexId);
         request.setAttribute("apiCallSetting", apiCallSetting);
         ModelAndView view = new ModelAndView("sandbox/apireqparamset");
         return view;
@@ -53,8 +53,7 @@ public class SandboxController {
     @RequestMapping("/resttest.html")
     public ModelAndView toTestRest(HttpServletRequest request) {
         String indexId = request.getParameter("indexId");
-        ISandBoxSV iSandBoxSV = DubboConsumerFactory.getService(ISandBoxSV.class);
-        APIRest apiRest = iSandBoxSV.getAPIRest(indexId);
+        APIRest apiRest = sandBoxSV.getAPIRest(indexId);
         request.setAttribute("apiRest", apiRest);
         ModelAndView view = new ModelAndView("sandbox/resttest");
         return view;
@@ -73,7 +72,7 @@ public class SandboxController {
             if (vo == null) {
                 throw new SystemException("没有传入待测试的数据");
             }
-            String testResult = DubboConsumerFactory.getService(ISandBoxSV.class).testRest(vo);
+            String testResult = sandBoxSV.testRest(vo);
             json.put("actualCode", "success");
             json.put("actualResult", testResult);
         } catch (Exception ex) {
@@ -98,7 +97,7 @@ public class SandboxController {
                 throw new SystemException("没有传入任何信息");
             }
 
-            DubboConsumerFactory.getService(ISandBoxSV.class).saveAPICallSetting(apiCallSetting);
+            sandBoxSV.saveAPICallSetting(apiCallSetting);
             responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "服务参数模板设置成功",
                     null);
         } catch (Exception e) {
@@ -115,8 +114,7 @@ public class SandboxController {
             if (StringUtil.isBlank(registryURL)) {
                 throw new SystemException("没有传入注册中心地址");
             }
-            boolean result = DubboConsumerFactory.getService(ISandBoxSV.class)
-                    .checkRegistryAvailable(registryURL);
+            boolean result = sandBoxSV.checkRegistryAvailable(registryURL);
             responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,
                     "测试注册中心连通性成功", result ? "1" : "0");
         } catch (Exception e) {
@@ -130,8 +128,7 @@ public class SandboxController {
     public ResponseData<APICallSetting> loadAPISetting(String indexId) {
         ResponseData<APICallSetting> responseData = null;
         try {
-            APICallSetting data = DubboConsumerFactory.getService(ISandBoxSV.class)
-                    .getAPICallSettingFromES(indexId);
+            APICallSetting data = sandBoxSV.getAPICallSettingFromES(indexId);
             responseData = new ResponseData<APICallSetting>(ResponseData.AJAX_STATUS_SUCCESS,
                     "获取服务设置信息成功", data);
         } catch (Exception e) {
@@ -162,7 +159,7 @@ public class SandboxController {
             if (vo == null) {
                 throw new SystemException("没有传入任何信息");
             }
-            DubboConsumerFactory.getService(ISandBoxSV.class).setAPISandboxSetting(vo);
+            sandBoxSV.setAPISandboxSetting(vo);
             responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "服务设置成功", "");
         } catch (Exception e) {
             responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "服务设置失败:"
@@ -174,8 +171,7 @@ public class SandboxController {
     @RequestMapping("/toMockTest.html")
     public ModelAndView toMockTest(HttpServletRequest request) {
         String indexId = request.getParameter("indexId");
-        ISandBoxSV iSandBoxSV = DubboConsumerFactory.getService(ISandBoxSV.class);
-        APICallSetting apiCallSetting = iSandBoxSV.getAPICallSettingFromES(indexId);
+        APICallSetting apiCallSetting = sandBoxSV.getAPICallSettingFromES(indexId);
         request.setAttribute("apiCallSetting", apiCallSetting);
         ModelAndView view = new ModelAndView("sandbox/mocktest");
         return view;
@@ -194,7 +190,7 @@ public class SandboxController {
             if (vo == null) {
                 throw new SystemException("没有传入待测试的数据");
             }
-            String testResult = DubboConsumerFactory.getService(ISandBoxSV.class).excuteTest(vo,
+            String testResult = sandBoxSV.excuteTest(vo,
                     registryURL);
             json.put("actualCode", "success");
             json.put("actualResult", testResult);
@@ -219,7 +215,7 @@ public class SandboxController {
             if (vo == null) {
                 throw new SystemException("没有传入任何信息");
             }
-            DubboConsumerFactory.getService(ISandBoxSV.class).saveAPICallCase(vo);
+            sandBoxSV.saveAPICallCase(vo);
             responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "服务测试用例保存成功",
                     "");
         } catch (Exception e) {
@@ -241,8 +237,7 @@ public class SandboxController {
             if (vo == null) {
                 throw new SystemException("查询条件为空");
             }
-            PageInfo<APICallCase> result = DubboConsumerFactory.getService(ISandBoxSV.class)
-                    .queryAPICallCases(vo);
+            PageInfo<APICallCase> result = sandBoxSV.queryAPICallCases(vo);
             responseData = new ResponseData<PageInfo<APICallCase>>(
                     ResponseData.AJAX_STATUS_SUCCESS, "查询成功", result);
         } catch (Exception e) {
@@ -259,8 +254,7 @@ public class SandboxController {
             if (StringUtil.isBlank(caseId)) {
                 throw new SystemException("查询条件为空");
             }
-            List<APICallCaseReqParam> list = DubboConsumerFactory.getService(ISandBoxSV.class)
-                    .queryAPICallCaseReqParams(caseId);
+            List<APICallCaseReqParam> list = sandBoxSV.queryAPICallCaseReqParams(caseId);
             responseData = new ResponseData<List<APICallCaseReqParam>>(
                     ResponseData.AJAX_STATUS_SUCCESS, "查询成功", list);
         } catch (Exception e) {

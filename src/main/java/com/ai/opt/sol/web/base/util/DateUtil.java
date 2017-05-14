@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import com.ai.opt.sdk.util.StringUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

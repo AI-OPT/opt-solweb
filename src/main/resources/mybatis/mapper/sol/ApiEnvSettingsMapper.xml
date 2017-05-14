@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.opt.sol.core.mapper.interfaces.ApiEnvSettingsMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.opt.sol.core.mapper.bo.ApiEnvSettings" >
+    <id column="settings_id" property="settingsId" jdbcType="VARCHAR" />
+    <result column="ownerType" property="ownertype" jdbcType="VARCHAR" />
+    <result column="owner" property="owner" jdbcType="VARCHAR" />
+    <result column="env" property="env" jdbcType="VARCHAR" />
+    <result column="zkcenter" property="zkcenter" jdbcType="VARCHAR" />
+    <result column="resthttp" property="resthttp" jdbcType="VARCHAR" />
+    <result column="monitor" property="monitor" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    settings_id, ownerType, owner, env, zkcenter, resthttp, monitor
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.opt.sol.core.mapper.bo.ApiEnvSettingsCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from api_env_settings
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from api_env_settings
+    where settings_id = #{settingsId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from api_env_settings
+    where settings_id = #{settingsId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.opt.sol.core.mapper.bo.ApiEnvSettingsCriteria" >
+    delete from api_env_settings
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.opt.sol.core.mapper.bo.ApiEnvSettings" >
+    insert into api_env_settings (settings_id, ownerType, owner, 
+      env, zkcenter, resthttp, 
+      monitor)
+    values (#{settingsId,jdbcType=VARCHAR}, #{ownertype,jdbcType=VARCHAR}, #{owner,jdbcType=VARCHAR}, 
+      #{env,jdbcType=VARCHAR}, #{zkcenter,jdbcType=VARCHAR}, #{resthttp,jdbcType=VARCHAR}, 
+      #{monitor,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.opt.sol.core.mapper.bo.ApiEnvSettings" >
+    insert into api_env_settings
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="settingsId != null" >
+        settings_id,
+      </if>
+      <if test="ownertype != null" >
+        ownerType,
+      </if>
+      <if test="owner != null" >
+        owner,
+      </if>
+      <if test="env != null" >
+        env,
+      </if>
+      <if test="zkcenter != null" >
+        zkcenter,
+      </if>
+      <if test="resthttp != null" >
+        resthttp,
+      </if>
+      <if test="monitor != null" >
+        monitor,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="settingsId != null" >
+        #{settingsId,jdbcType=VARCHAR},
+      </if>
+      <if test="ownertype != null" >
+        #{ownertype,jdbcType=VARCHAR},
+      </if>
+      <if test="owner != null" >
+        #{owner,jdbcType=VARCHAR},
+      </if>
+      <if test="env != null" >
+        #{env,jdbcType=VARCHAR},
+      </if>
+      <if test="zkcenter != null" >
+        #{zkcenter,jdbcType=VARCHAR},
+      </if>
+      <if test="resthttp != null" >
+        #{resthttp,jdbcType=VARCHAR},
+      </if>
+      <if test="monitor != null" >
+        #{monitor,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.opt.sol.core.mapper.bo.ApiEnvSettingsCriteria" resultType="java.lang.Integer" >
+    select count(*) from api_env_settings
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update api_env_settings
+    <set >
+      <if test="record.settingsId != null" >
+        settings_id = #{record.settingsId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ownertype != null" >
+        ownerType = #{record.ownertype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.owner != null" >
+        owner = #{record.owner,jdbcType=VARCHAR},
+      </if>
+      <if test="record.env != null" >
+        env = #{record.env,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zkcenter != null" >
+        zkcenter = #{record.zkcenter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resthttp != null" >
+        resthttp = #{record.resthttp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.monitor != null" >
+        monitor = #{record.monitor,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update api_env_settings
+    set settings_id = #{record.settingsId,jdbcType=VARCHAR},
+      ownerType = #{record.ownertype,jdbcType=VARCHAR},
+      owner = #{record.owner,jdbcType=VARCHAR},
+      env = #{record.env,jdbcType=VARCHAR},
+      zkcenter = #{record.zkcenter,jdbcType=VARCHAR},
+      resthttp = #{record.resthttp,jdbcType=VARCHAR},
+      monitor = #{record.monitor,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.opt.sol.core.mapper.bo.ApiEnvSettings" >
+    update api_env_settings
+    <set >
+      <if test="ownertype != null" >
+        ownerType = #{ownertype,jdbcType=VARCHAR},
+      </if>
+      <if test="owner != null" >
+        owner = #{owner,jdbcType=VARCHAR},
+      </if>
+      <if test="env != null" >
+        env = #{env,jdbcType=VARCHAR},
+      </if>
+      <if test="zkcenter != null" >
+        zkcenter = #{zkcenter,jdbcType=VARCHAR},
+      </if>
+      <if test="resthttp != null" >
+        resthttp = #{resthttp,jdbcType=VARCHAR},
+      </if>
+      <if test="monitor != null" >
+        monitor = #{monitor,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where settings_id = #{settingsId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.opt.sol.core.mapper.bo.ApiEnvSettings" >
+    update api_env_settings
+    set ownerType = #{ownertype,jdbcType=VARCHAR},
+      owner = #{owner,jdbcType=VARCHAR},
+      env = #{env,jdbcType=VARCHAR},
+      zkcenter = #{zkcenter,jdbcType=VARCHAR},
+      resthttp = #{resthttp,jdbcType=VARCHAR},
+      monitor = #{monitor,jdbcType=VARCHAR}
+    where settings_id = #{settingsId,jdbcType=VARCHAR}
+  </update>
+</mapper>

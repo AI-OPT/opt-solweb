@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.opt.sol.core.mapper.interfaces.ApiCallSettingMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.opt.sol.core.mapper.bo.ApiCallSetting" >
+    <id column="setting_id" property="settingId" jdbcType="VARCHAR" />
+    <result column="api_code" property="apiCode" jdbcType="VARCHAR" />
+    <result column="app_name" property="appName" jdbcType="VARCHAR" />
+    <result column="interface_name" property="interfaceName" jdbcType="VARCHAR" />
+    <result column="method" property="method" jdbcType="VARCHAR" />
+    <result column="return_java_type" property="returnJavaType" jdbcType="VARCHAR" />
+    <result column="return_comment" property="returnComment" jdbcType="VARCHAR" />
+    <result column="return_json" property="returnJson" jdbcType="VARCHAR" />
+    <result column="call_type" property="callType" jdbcType="VARCHAR" />
+    <result column="sandbox_resp" property="sandboxResp" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    setting_id, api_code, app_name, interface_name, method, return_java_type, return_comment, 
+    return_json, call_type, sandbox_resp
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.opt.sol.core.mapper.bo.ApiCallSettingCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from api_call_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from api_call_setting
+    where setting_id = #{settingId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from api_call_setting
+    where setting_id = #{settingId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.opt.sol.core.mapper.bo.ApiCallSettingCriteria" >
+    delete from api_call_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.opt.sol.core.mapper.bo.ApiCallSetting" >
+    insert into api_call_setting (setting_id, api_code, app_name, 
+      interface_name, method, return_java_type, 
+      return_comment, return_json, call_type, 
+      sandbox_resp)
+    values (#{settingId,jdbcType=VARCHAR}, #{apiCode,jdbcType=VARCHAR}, #{appName,jdbcType=VARCHAR}, 
+      #{interfaceName,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, #{returnJavaType,jdbcType=VARCHAR}, 
+      #{returnComment,jdbcType=VARCHAR}, #{returnJson,jdbcType=VARCHAR}, #{callType,jdbcType=VARCHAR}, 
+      #{sandboxResp,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.opt.sol.core.mapper.bo.ApiCallSetting" >
+    insert into api_call_setting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="settingId != null" >
+        setting_id,
+      </if>
+      <if test="apiCode != null" >
+        api_code,
+      </if>
+      <if test="appName != null" >
+        app_name,
+      </if>
+      <if test="interfaceName != null" >
+        interface_name,
+      </if>
+      <if test="method != null" >
+        method,
+      </if>
+      <if test="returnJavaType != null" >
+        return_java_type,
+      </if>
+      <if test="returnComment != null" >
+        return_comment,
+      </if>
+      <if test="returnJson != null" >
+        return_json,
+      </if>
+      <if test="callType != null" >
+        call_type,
+      </if>
+      <if test="sandboxResp != null" >
+        sandbox_resp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="settingId != null" >
+        #{settingId,jdbcType=VARCHAR},
+      </if>
+      <if test="apiCode != null" >
+        #{apiCode,jdbcType=VARCHAR},
+      </if>
+      <if test="appName != null" >
+        #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="interfaceName != null" >
+        #{interfaceName,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null" >
+        #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="returnJavaType != null" >
+        #{returnJavaType,jdbcType=VARCHAR},
+      </if>
+      <if test="returnComment != null" >
+        #{returnComment,jdbcType=VARCHAR},
+      </if>
+      <if test="returnJson != null" >
+        #{returnJson,jdbcType=VARCHAR},
+      </if>
+      <if test="callType != null" >
+        #{callType,jdbcType=VARCHAR},
+      </if>
+      <if test="sandboxResp != null" >
+        #{sandboxResp,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.opt.sol.core.mapper.bo.ApiCallSettingCriteria" resultType="java.lang.Integer" >
+    select count(*) from api_call_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update api_call_setting
+    <set >
+      <if test="record.settingId != null" >
+        setting_id = #{record.settingId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apiCode != null" >
+        api_code = #{record.apiCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appName != null" >
+        app_name = #{record.appName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interfaceName != null" >
+        interface_name = #{record.interfaceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.method != null" >
+        method = #{record.method,jdbcType=VARCHAR},
+      </if>
+      <if test="record.returnJavaType != null" >
+        return_java_type = #{record.returnJavaType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.returnComment != null" >
+        return_comment = #{record.returnComment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.returnJson != null" >
+        return_json = #{record.returnJson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.callType != null" >
+        call_type = #{record.callType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sandboxResp != null" >
+        sandbox_resp = #{record.sandboxResp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update api_call_setting
+    set setting_id = #{record.settingId,jdbcType=VARCHAR},
+      api_code = #{record.apiCode,jdbcType=VARCHAR},
+      app_name = #{record.appName,jdbcType=VARCHAR},
+      interface_name = #{record.interfaceName,jdbcType=VARCHAR},
+      method = #{record.method,jdbcType=VARCHAR},
+      return_java_type = #{record.returnJavaType,jdbcType=VARCHAR},
+      return_comment = #{record.returnComment,jdbcType=VARCHAR},
+      return_json = #{record.returnJson,jdbcType=VARCHAR},
+      call_type = #{record.callType,jdbcType=VARCHAR},
+      sandbox_resp = #{record.sandboxResp,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.opt.sol.core.mapper.bo.ApiCallSetting" >
+    update api_call_setting
+    <set >
+      <if test="apiCode != null" >
+        api_code = #{apiCode,jdbcType=VARCHAR},
+      </if>
+      <if test="appName != null" >
+        app_name = #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="interfaceName != null" >
+        interface_name = #{interfaceName,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null" >
+        method = #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="returnJavaType != null" >
+        return_java_type = #{returnJavaType,jdbcType=VARCHAR},
+      </if>
+      <if test="returnComment != null" >
+        return_comment = #{returnComment,jdbcType=VARCHAR},
+      </if>
+      <if test="returnJson != null" >
+        return_json = #{returnJson,jdbcType=VARCHAR},
+      </if>
+      <if test="callType != null" >
+        call_type = #{callType,jdbcType=VARCHAR},
+      </if>
+      <if test="sandboxResp != null" >
+        sandbox_resp = #{sandboxResp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where setting_id = #{settingId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.opt.sol.core.mapper.bo.ApiCallSetting" >
+    update api_call_setting
+    set api_code = #{apiCode,jdbcType=VARCHAR},
+      app_name = #{appName,jdbcType=VARCHAR},
+      interface_name = #{interfaceName,jdbcType=VARCHAR},
+      method = #{method,jdbcType=VARCHAR},
+      return_java_type = #{returnJavaType,jdbcType=VARCHAR},
+      return_comment = #{returnComment,jdbcType=VARCHAR},
+      return_json = #{returnJson,jdbcType=VARCHAR},
+      call_type = #{callType,jdbcType=VARCHAR},
+      sandbox_resp = #{sandboxResp,jdbcType=VARCHAR}
+    where setting_id = #{settingId,jdbcType=VARCHAR}
+  </update>
+</mapper>

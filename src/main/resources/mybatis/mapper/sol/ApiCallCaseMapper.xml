@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.opt.sol.core.mapper.interfaces.ApiCallCaseMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.opt.sol.core.mapper.bo.ApiCallCase" >
+    <id column="case_id" property="caseId" jdbcType="VARCHAR" />
+    <result column="interface_name" property="interfaceName" jdbcType="VARCHAR" />
+    <result column="method" property="method" jdbcType="VARCHAR" />
+    <result column="actual_result" property="actualResult" jdbcType="VARCHAR" />
+    <result column="tester" property="tester" jdbcType="VARCHAR" />
+    <result column="test_time" property="testTime" jdbcType="TIMESTAMP" />
+    <result column="case_tag" property="caseTag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    case_id, interface_name, method, actual_result, tester, test_time, case_tag
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.opt.sol.core.mapper.bo.ApiCallCaseCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from api_call_case
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from api_call_case
+    where case_id = #{caseId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from api_call_case
+    where case_id = #{caseId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.opt.sol.core.mapper.bo.ApiCallCaseCriteria" >
+    delete from api_call_case
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.opt.sol.core.mapper.bo.ApiCallCase" >
+    insert into api_call_case (case_id, interface_name, method, 
+      actual_result, tester, test_time, 
+      case_tag)
+    values (#{caseId,jdbcType=VARCHAR}, #{interfaceName,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, 
+      #{actualResult,jdbcType=VARCHAR}, #{tester,jdbcType=VARCHAR}, #{testTime,jdbcType=TIMESTAMP}, 
+      #{caseTag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.opt.sol.core.mapper.bo.ApiCallCase" >
+    insert into api_call_case
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="caseId != null" >
+        case_id,
+      </if>
+      <if test="interfaceName != null" >
+        interface_name,
+      </if>
+      <if test="method != null" >
+        method,
+      </if>
+      <if test="actualResult != null" >
+        actual_result,
+      </if>
+      <if test="tester != null" >
+        tester,
+      </if>
+      <if test="testTime != null" >
+        test_time,
+      </if>
+      <if test="caseTag != null" >
+        case_tag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="caseId != null" >
+        #{caseId,jdbcType=VARCHAR},
+      </if>
+      <if test="interfaceName != null" >
+        #{interfaceName,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null" >
+        #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="actualResult != null" >
+        #{actualResult,jdbcType=VARCHAR},
+      </if>
+      <if test="tester != null" >
+        #{tester,jdbcType=VARCHAR},
+      </if>
+      <if test="testTime != null" >
+        #{testTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="caseTag != null" >
+        #{caseTag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.opt.sol.core.mapper.bo.ApiCallCaseCriteria" resultType="java.lang.Integer" >
+    select count(*) from api_call_case
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update api_call_case
+    <set >
+      <if test="record.caseId != null" >
+        case_id = #{record.caseId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interfaceName != null" >
+        interface_name = #{record.interfaceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.method != null" >
+        method = #{record.method,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actualResult != null" >
+        actual_result = #{record.actualResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tester != null" >
+        tester = #{record.tester,jdbcType=VARCHAR},
+      </if>
+      <if test="record.testTime != null" >
+        test_time = #{record.testTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.caseTag != null" >
+        case_tag = #{record.caseTag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update api_call_case
+    set case_id = #{record.caseId,jdbcType=VARCHAR},
+      interface_name = #{record.interfaceName,jdbcType=VARCHAR},
+      method = #{record.method,jdbcType=VARCHAR},
+      actual_result = #{record.actualResult,jdbcType=VARCHAR},
+      tester = #{record.tester,jdbcType=VARCHAR},
+      test_time = #{record.testTime,jdbcType=TIMESTAMP},
+      case_tag = #{record.caseTag,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.opt.sol.core.mapper.bo.ApiCallCase" >
+    update api_call_case
+    <set >
+      <if test="interfaceName != null" >
+        interface_name = #{interfaceName,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null" >
+        method = #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="actualResult != null" >
+        actual_result = #{actualResult,jdbcType=VARCHAR},
+      </if>
+      <if test="tester != null" >
+        tester = #{tester,jdbcType=VARCHAR},
+      </if>
+      <if test="testTime != null" >
+        test_time = #{testTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="caseTag != null" >
+        case_tag = #{caseTag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where case_id = #{caseId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.opt.sol.core.mapper.bo.ApiCallCase" >
+    update api_call_case
+    set interface_name = #{interfaceName,jdbcType=VARCHAR},
+      method = #{method,jdbcType=VARCHAR},
+      actual_result = #{actualResult,jdbcType=VARCHAR},
+      tester = #{tester,jdbcType=VARCHAR},
+      test_time = #{testTime,jdbcType=TIMESTAMP},
+      case_tag = #{caseTag,jdbcType=VARCHAR}
+    where case_id = #{caseId,jdbcType=VARCHAR}
+  </update>
+</mapper>
