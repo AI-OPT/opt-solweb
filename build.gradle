@@ -91,5 +91,5 @@ eclipse {
 }
 
 war {
-    archiveName 'opt-solweb.war'
+    archiveName 'solweb.war'
 }
